@@ -1,7 +1,14 @@
+# Archivos y carpetas generados por Wollok/Eclipse
 .metadata/
 bin/
 .settings/
 .wollok/
 
+# Logs e historial local (Estándar de la facultad)
+log/
+*.log
+.history
+
+# Archivos de sistema operativo (Mac y Windows)
 .DS_Store
 Thumbs.db
