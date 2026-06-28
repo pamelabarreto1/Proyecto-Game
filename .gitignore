@@ -1,0 +1,7 @@
+.metadata/
+bin/
+.settings/
+.wollok/
+
+.DS_Store
+Thumbs.db
