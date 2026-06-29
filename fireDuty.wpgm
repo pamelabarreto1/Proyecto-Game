@@ -1,5 +1,12 @@
 import wollok.game.*
+import bombero.*
 
 program juego {
+    game.width(10)
+    game.height(10)
+    game.cellSize(100)
+    game.ground("bombero.png")
     
+    game.start()
+    game.addVisualCharacter(bombero)
 }
