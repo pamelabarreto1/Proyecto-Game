@@ -4,16 +4,21 @@ import civiles_y_fuego.*
 
 const civil1 = new Civil(position = game.at(1, 2), image = "civil2.png")
 program juego {
-    game.width(10)
-    game.height(10)
+    game.width(16)
+    game.height(16)
     game.ground("escenario2.png")
     
     game.addVisual(bombero)
     game.addVisual(civil1)
+
     keyboard.w().onPressDo({bombero.subir()})
     keyboard.s().onPressDo({bombero.bajar()})
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
+
+    game.onCollideDo(bombero, {
+        civil => bombero.rescatar(civil)
+        })
 
     game.start()
     

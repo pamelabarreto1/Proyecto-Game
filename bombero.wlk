@@ -30,14 +30,14 @@ object bombero {
             self.error(game.say(self, "Antes tengo que dejar al civil en un lugar seguro"))
         }
         estaCargandoUnCivil = true
-        image = "BomberoRescate.png"
+        image = "bomberoRescate.png"
         game.removeVisual(civil)
     }
     method dejarCivilEnSalida() {
         estaCargandoUnCivil = false
         image = "bomberoPersonaje.png"
     }
-    
+
     // apagar
     // cargarAgua
 }
