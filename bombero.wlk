@@ -1,3 +1,4 @@
+
 object bombero {
     var property image = "bomberoPersonaje.png"
 
