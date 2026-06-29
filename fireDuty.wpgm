@@ -5,8 +5,14 @@ program juego {
     game.width(10)
     game.height(10)
     game.cellSize(100)
-    game.ground("bombero.png")
+    game.ground("escenario.png")
+    
+    game.addVisual(bombero)
+    keyboard.w().onPressDo({bombero.subir()})
+    keyboard.s().onPressDo({bombero.bajar()})
+    keyboard.d().onPressDo({bombero.derecha()})
+    keyboard.a().onPressDo({bombero.izquierda()})
     
     game.start()
-    game.addVisualCharacter(bombero)
+    
 }

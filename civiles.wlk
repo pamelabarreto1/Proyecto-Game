@@ -1,6 +1,6 @@
 class Civil {
     var property posicion
+    const property imagen
 
-    method imagen()
-    
+    method serRescatado()
 }

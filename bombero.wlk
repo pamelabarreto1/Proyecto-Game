@@ -1,9 +1,10 @@
 
 object bombero {
-    method imagen() = "bombero.png"
+    var property image = "bomberoPersonaje.png"
 
     var property position = game.origin()
     var property energia = 100
+    var property estaCargandoUnCivil = false
 
     method energia() = energia
 
@@ -24,7 +25,18 @@ object bombero {
         energia = (energia - 1).max(0)
     }
 
-    rescatar
-    apagar
-    cargarAgua
+    method rescatar(civil) {
+        if (estaCargandoUnCivil) {
+            self.error(game.say(self, "Antes tengo que dejar al civil en un lugar seguro"))
+        }
+        estaCargandoUnCivil = true
+        image = "BomberoRescate.png"
+        game.removeVisual(civil)
+    }
+    method dejarCivilEnSalida() {
+        estaCargandoUnCivil = false
+        image = "bomberoPersonaje.png"
+    }
+    // apagar
+    // cargarAgua
 }
