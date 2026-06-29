@@ -3,27 +3,40 @@ object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
 
-    var property energia = 100
+    var energia = 100
     var property estaCargandoUnCivil = false
 
 
     method energia() = energia
 
+    method cansarse() {
+        energia = (energia - 1).max(0)
+        if (self.energia() == 0) {
+            game.schedule(2000, { game.stop() })
+        }
+    }
+    method quemarse(cantidad) {
+        energia = (energia - cantidad).max(0)
+        if (self.energia() == 0) {
+            game.schedule(0, { game.stop() })
+        }
+    }
+
     method subir() {
         position = position.up(1)
-        energia = (energia - 1).max(0)
+        self.cansarse()
     }
     method bajar() {
         position = position.down(1)
-        energia = (energia - 1).max(0)
+        self.cansarse()
     }
     method derecha() {
         position = position.right(1)
-        energia = (energia - 1).max(0)
+        self.cansarse()
     }
     method izquierda() {
         position = position.left(1)
-        energia = (energia - 1).max(0)
+        self.cansarse()
     }
 
     method rescatar(civil) {
@@ -43,7 +56,7 @@ object bombero {
     // cargarAgua
 }
 object energiaBombero {
-    const property position = game.at(5, 5)
+    const property position = game.at(0, 6)
     method text() = bombero.energia().toString()
     method textColor() = "FF0000FF"
 }

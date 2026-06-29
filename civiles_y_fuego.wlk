@@ -14,10 +14,14 @@ class Civil {
 
 class Fuego {
     const property position 
-    const property image 
+    const property image = "flama.png"
 
     method interactuarCon(bombero) {
-        
+        bombero.quemarse(20)
+        game.say(bombero, "Cuidado con el fuego")
+        if(bombero.energia() == 0) {
+            game.say(bombero, "Sin energia para seguir")
+        }
     }
 }
 
