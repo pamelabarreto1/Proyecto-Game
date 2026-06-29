@@ -36,6 +36,7 @@ object bombero {
         estaCargandoUnCivil = false
         image = "bomberoPersonaje.png"
     }
+    
     // apagar
     // cargarAgua
 }
