@@ -1,10 +1,11 @@
 
 object bombero {
     var property image = "bomberoPersonaje.png"
+    var property position = game.at(1,0)
 
-    var property position = game.origin()
     var property energia = 100
     var property estaCargandoUnCivil = false
+
 
     method energia() = energia
 
@@ -27,7 +28,7 @@ object bombero {
 
     method rescatar(civil) {
         if (estaCargandoUnCivil) {
-            self.error(game.say(self, "Antes tengo que dejar al civil en un lugar seguro"))
+            game.say(self, "Antes tengo que dejar al civil en un lugar seguro")
         }
         estaCargandoUnCivil = true
         image = "bomberoRescate.png"
@@ -40,4 +41,21 @@ object bombero {
 
     // apagar
     // cargarAgua
+}
+object energiaBombero {
+    const property position = game.at(5, 5)
+    method text() = bombero.energia().toString()
+    method textColor() = "FF0000FF"
+}
+
+object salida {
+    const property position = game.at(0, 0)
+    const property image = "salida.png"
+
+    method interactuarCon(bombero) {
+        if (bombero.estaCargandoUnCivil()) {
+            bombero.dejarCivilEnSalida()
+            game.say(bombero, "Un civil menos")
+        }
+    }
 }
