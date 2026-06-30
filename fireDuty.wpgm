@@ -1,37 +1,13 @@
 import wollok.game.*
-import bombero.*
-import civiles_y_fuego.*
+import escenarios.*
 
-const civil1 = new Civil(position = game.at(1, 2), image = "civil2.png")
-const civil = new Civil(position = game.at(1, 3), image = "civil.png")
-const flama = new Fuego(position = game.at(1, 4))
+
 program juego {
     game.width(10)
     game.height(7)
     game.cellSize(50)
-    game.ground("escenario2.png")
-
-    game.addVisual(energiaBombero)
-    game.addVisual(civil1)
-    game.addVisual(civil)
-    game.addVisual(flama)
-    game.addVisual(bombero)
-    game.addVisual(salida)
-
-    keyboard.w().onPressDo({bombero.subir()})
-    keyboard.s().onPressDo({bombero.bajar()})
-    keyboard.d().onPressDo({bombero.derecha()})
-    keyboard.a().onPressDo({bombero.izquierda()})
     
-    keyboard.up().onPressDo({bombero.apagarArriba()})
-    keyboard.right().onPressDo({bombero.apagarALaDerecha()})
-    keyboard.down().onPressDo({bombero.apagarAbajo()})
-    keyboard.left().onPressDo({bombero.apagarALaIzquierda()})
-
-    game.onCollideDo(bombero, {
-        objeto => objeto.interactuarCon(bombero)
-        })
-    
+    menu.iniciar()
     game.start()
     
 }
