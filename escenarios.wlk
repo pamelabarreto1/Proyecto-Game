@@ -34,6 +34,7 @@ const flama3 = new Fuego(position = game.at(2, 3))
     game.addVisual(energiaBombero)
     game.addVisual(civil1)
     game.addVisual(civil)
+    game.addVisual(lago)
     game.addVisual(flama0)
     game.addVisual(flama2)
     game.addVisual(flama1)
@@ -58,10 +59,10 @@ object nivelDificil {
 // Creamos los objetos a usar en el nivel
 const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
 const civil = new Civil(position = game.at(5, 3), image = "civil.png")
-const flama0 = new Fuego(position = game.at(1, 4))
-const flama1 = new Fuego(position = game.at(3, 3))
-const flama2 = new Fuego(position = game.at(5, 4))
-const flama3 = new Fuego(position = game.at(2, 3))
+const flama0 = new Fuego(position = game.at(2, 6), danio = 40)
+    const flama1 = new Fuego(position = game.at(4, 2), danio = 40)//le agregué el danio a 40 para complejisar el juego
+    const flama2 = new Fuego(position = game.at(6, 5), danio = 40)
+    const flama3 = new Fuego(position = game.at(1, 1), danio = 40)
 
 // iniciamos desde las opciones del menu
 
@@ -78,6 +79,7 @@ const flama3 = new Fuego(position = game.at(2, 3))
     game.addVisual(flama2)
     game.addVisual(flama1)
     game.addVisual(flama3)
+    game.addVisual(lago)
     game.addVisual(bombero)
     game.addVisual(salida)
 

@@ -15,12 +15,12 @@ class Civil {
 class Fuego {
     const property position 
     const property image = "flama.png"
-
+    var property danio= 20
     method interactuarCon(bombero) {
         if(bombero.agua()>0){
             bombero.apagar(self)
         } else{
-        bombero.quemarse(20)
+        bombero.quemarse(danio)
         game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
             game.say(bombero, "Sin energia para seguir")
