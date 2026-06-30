@@ -87,6 +87,11 @@ const flama0 = new Fuego(position = game.at(2, 6), danio = 40)
     keyboard.s().onPressDo({bombero.bajar()})
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
+
+    keyboard.up().onPressDo().apagarArriba()
+    keyboard.right().onPressDo().apagarALaDerecha()
+    keyboard.left().onPressDo().apagarALaIzquierda()
+    keyboard.down().onPressDo().apagarAbajo()
     
 
     game.onCollideDo(bombero, {

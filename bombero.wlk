@@ -4,9 +4,10 @@ import civiles_y_fuego.*
 object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
-    var agua=0
+    var agua = 3
     var energia = 100
     var property estaCargandoUnCivil = false 
+    var civilCargado = null
 
     
     method energia() = energia
@@ -48,24 +49,53 @@ object bombero {
     method rescatar(civil) {
         if (estaCargandoUnCivil) {
             game.say(self, "Antes tengo que dejar al civil en un lugar seguro")
+        } else {
+            estaCargandoUnCivil = true
+            civilCargado = civil
+            image = "bomberoRescate.png"
+            game.removeVisual(civil)
         }
-        estaCargandoUnCivil = true
-        image = "bomberoRescate.png"
-        game.removeVisual(civil)
     }
     method dejarCivilEnSalida() {
         estaCargandoUnCivil = false
+        civilCargado.serSalvado()
+        civilCargado = null
         image = "bomberoPersonaje.png"
     }
 
-    method apagar(fuego){
-    
-        agua= agua-1
-        self.cansarse()
-        game.removeVisual(fuego)
-        game.say(self, "Fuego apagado!")
-    
+     method apagarALaDerecha() {
+        const celdaALaDerecha = self.position().right(1)
+        const objetosEnCelda = celdaALaDerecha.getObjectsIn()
+        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
+            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
+            agua = agua - 25
+        }
     }
+
+    method apagarALaIzquierda() {
+        const celdaALaIzquierda = self.position().left(1)
+        const objetosEnCelda = game.getObjectsIn(celdaALaIzquierda)
+        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
+            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
+        }
+    }
+
+    method apagarAbajo() {
+        const celdaAbajo = self.position().down(1)
+        const objetosEnCelda = game.getObjectsIn(celdaAbajo)
+        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
+            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
+        }
+    }
+
+    method apagarArriba() {
+        const celdaArriba = self.position().up(1)
+        const objetosEnCelda = game.getObjectsIn(celdaArriba)
+        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
+            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
+        }
+    }
+
     method cargarAgua(){
         agua=3 //le puse como limite 3 pero podemos configurarlo a mas
         game.say(self, "Manguera cargada!")

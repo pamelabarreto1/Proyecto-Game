@@ -2,13 +2,14 @@ class Civil {
     var property position
     const property image
 
+    var estaASalvo = false
+
+    method serSalvado() {
+        estaASalvo = true
+    }
+
     method interactuarCon(bombero) {
-        if (bombero.estaCargandoUnCivil()) {
-            game.say(bombero, "Tengo que dejar el civil primero en la salida")
-        }
-        else {
-            bombero.rescatar(self)
-        }
+        bombero.rescatar(self)
     }
 }
 
@@ -16,10 +17,15 @@ class Fuego {
     const property position 
     const property image = "flama.png"
     var property danio= 20
+
+    var estaApagado = false
+
+    method serApagado() {
+        estaApagado = true
+        game.removeVisual(self)
+    }
+
     method interactuarCon(bombero) {
-        if(bombero.agua()>0){
-            bombero.apagar(self)
-        } else{
         bombero.quemarse(danio)
         game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
@@ -27,7 +33,7 @@ class Fuego {
         }
     }
 }
-}
+
 
 object lago {
     const property position = game.at(5, 5) 
