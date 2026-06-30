@@ -23,6 +23,10 @@ program juego {
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
     
+    keyboard.up().onPressDo({bombero.apagarArriba()})
+    keyboard.right().onPressDo({bombero.apagarALaDerecha()})
+    keyboard.down().onPressDo({bombero.apagarAbajo()})
+    keyboard.left().onPressDo({bombero.apagarALaIzquierda()})
 
     game.onCollideDo(bombero, {
         objeto => objeto.interactuarCon(bombero)
