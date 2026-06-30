@@ -17,11 +17,23 @@ class Fuego {
     const property image = "flama.png"
 
     method interactuarCon(bombero) {
+        if(bombero.agua()>0){
+            bombero.apagar(self)
+        } else{
         bombero.quemarse(20)
-        game.say(bombero, "Cuidado con el fuego")
+        game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
             game.say(bombero, "Sin energia para seguir")
         }
     }
 }
+}
 
+object lago {
+    const property position = game.at(5, 5) 
+    const property image = "lago.png" 
+
+    method interactuarCon(bombero) {
+        bombero.cargarAgua() 
+    }
+}

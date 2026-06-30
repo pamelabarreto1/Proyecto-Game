@@ -1,17 +1,18 @@
+import civiles_y_fuego.*
+
 
 object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
-
+    var agua=0
     var energia = 100
     var property estaCargandoUnCivil = false 
 
-
+    
     method energia() = energia
-
-// cada que movemos se cansa la energia baja en 1
-
-    method cansarse() {
+    method agua() = agua
+    
+    method cansarse() { // cada que movemos se cansa la energia baja en 1
         energia = (energia - 1).max(0)
         if (self.energia() == 0) {
             game.schedule(0, { game.stop() })
@@ -57,8 +58,21 @@ object bombero {
         image = "bomberoPersonaje.png"
     }
 
-    // apagar
-    // cargarAgua
+    method apagar(fuego){
+    
+        agua= agua-1
+        self.cansarse()
+        game.removeVisual(fuego)
+        game.say(self, "Fuego apagado!")
+    
+    }
+    method cargarAgua(){
+        agua=3
+        game.say(self, "Manguera cargada!")
+    }
+   
+
+
 }
 
 // cartel para visualizar la energia del personaje
