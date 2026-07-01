@@ -1,3 +1,4 @@
+import escenarios.*
 class Civil {
     var property position
     const property image
@@ -30,6 +31,8 @@ class Fuego {
         game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
             game.say(bombero, "Sin energia para seguir")
+
+            administradorDeNivel1.cumplirObjetivo()
         }
     }
 }

@@ -7,10 +7,7 @@ program juego {
     game.height(7)
     game.cellSize(50)
 
-    keyboard.w().onPressDo().apagarArriba()
-    keyboard.d().onPressDo().apagarALaDerecha()
-    keyboard.a().onPressDo().apagarALaIzquierda()
-    keyboard.s().onPressDo().apagarAbajo()
+
     
     menu.iniciar()
     game.start()

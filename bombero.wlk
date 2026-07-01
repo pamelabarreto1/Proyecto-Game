@@ -1,4 +1,7 @@
+import escenarios.*
 import civiles_y_fuego.*
+
+
 
 
 object bombero {
@@ -120,6 +123,7 @@ object salida {
         if (bombero.estaCargandoUnCivil()) {
             bombero.dejarCivilEnSalida()
             game.say(bombero, "Un civil menos")
+            administradorDeNivel1.cumplirObjetivo()
         }
     }
 }

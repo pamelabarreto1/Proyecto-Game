@@ -3,6 +3,23 @@ import bombero.*
 import civiles_y_fuego.*
 import fondos.*
 
+class AdministradorDeNivel {
+    var property objetosPendientes 
+
+    method cumplirObjetivo() {
+        objetosPendientes = objetosPendientes - 1
+
+        if (objetosPendientes == 0) {
+            game.say(bombero, "¡Misión Cumplida! Ganaste.")
+            game.schedule(1000, {game.stop()})
+        }
+    }
+
+}
+
+const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 6)
+
+
 object menu {
     method iniciar() {
         game.addVisual(fondoMenu)
@@ -23,11 +40,17 @@ object nivelFacil {
 
 const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
 const civil = new Civil(position = game.at(5, 3), image = "civil.png")
+
+const objetosDelNivel = [civil1, civil, flama0, flama1, flama2, flama3]
+
 const flama0 = new Fuego(position = game.at(1, 4))
 const flama1 = new Fuego(position = game.at(3, 3))
 const flama2 = new Fuego(position = game.at(5, 4))
 const flama3 = new Fuego(position = game.at(2, 3))
+
     method iniciar() {
+
+    
 
     game.addVisual(fondoNivel_1)
     
@@ -51,6 +74,8 @@ const flama3 = new Fuego(position = game.at(2, 3))
     game.onCollideDo(bombero, {
         objeto => objeto.interactuarCon(bombero)
         })
+
+
     }
 }
 
