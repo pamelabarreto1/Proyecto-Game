@@ -11,7 +11,8 @@ class AdministradorDeNivel {
 
         if (objetosPendientes == 0) {
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
-            if (gestorDeNivel.nivelActual() == "facil") {
+
+            if (gestorDeNivel.nivelActual() == 1) {
                 game.say(bombero, "Hay otros civiles que rescatar.")
                 game.schedule(2500, {
                     game.clear()
@@ -30,7 +31,7 @@ class AdministradorDeNivel {
 
 const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 2)
 object gestorDeNivel {
-    var property nivelActual = ""
+    var property nivelActual = 0
 }
 
 object menu {
@@ -41,12 +42,12 @@ object menu {
     }
     method empezarJuegoFacil() {
         game.clear()
-        gestorDeNivel.nivelActual("facil")
+        gestorDeNivel.nivelActual(1)
         nivelFacil.iniciar()
     }
     method empezarJuegoDificil() {
         game.clear()
-        gestorDeNivel.nivelActual("dificil")
+        gestorDeNivel.nivelActual(2)
         nivelDificil.iniciar()
     }
 }
