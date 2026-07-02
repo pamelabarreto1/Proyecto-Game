@@ -17,7 +17,7 @@ class Civil {
 class Fuego {
     const property position 
     const property image = "flama.png"
-    var property danio= 20
+    var property daño = 20
 
     var estaApagado = false
 
@@ -27,7 +27,7 @@ class Fuego {
     }
 
     method interactuarCon(bombero) {
-        bombero.quemarse(danio)
+        bombero.quemarse(daño)
         game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
             game.say(bombero, "Sin energia para seguir")

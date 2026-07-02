@@ -11,14 +11,27 @@ class AdministradorDeNivel {
 
         if (objetosPendientes == 0) {
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
-            game.schedule(1000, {game.stop()})
+            if (gestorDeNivel.nivelActual() == "facil") {
+                game.say(bombero, "Hay otros civiles que rescatar.")
+                game.schedule(2500, {
+                    game.clear()
+                    nivelDificil.iniciar()})
+            }
+            else {
+            game.say(bombero, "¡Misión Cumplida! Ganaste.")
+            game.schedule(500, {
+                    game.stop()
+                })
+            }
         }
+        
     }
-
 }
 
-const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 6)
-
+const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 2)
+object gestorDeNivel {
+    var property nivelActual = ""
+}
 
 object menu {
     method iniciar() {
@@ -28,10 +41,12 @@ object menu {
     }
     method empezarJuegoFacil() {
         game.clear()
+        gestorDeNivel.nivelActual("facil")
         nivelFacil.iniciar()
     }
     method empezarJuegoDificil() {
         game.clear()
+        gestorDeNivel.nivelActual("dificil")
         nivelDificil.iniciar()
     }
 }
@@ -41,16 +56,12 @@ object nivelFacil {
 const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
 const civil = new Civil(position = game.at(5, 3), image = "civil.png")
 
-const objetosDelNivel = [civil1, civil, flama0, flama1, flama2, flama3]
-
 const flama0 = new Fuego(position = game.at(1, 4))
 const flama1 = new Fuego(position = game.at(3, 3))
 const flama2 = new Fuego(position = game.at(5, 4))
 const flama3 = new Fuego(position = game.at(2, 3))
 
     method iniciar() {
-
-    
 
     game.addVisual(fondoNivel_1)
     
@@ -82,12 +93,13 @@ const flama3 = new Fuego(position = game.at(2, 3))
 object nivelDificil {
 
 // Creamos los objetos a usar en el nivel
+
 const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
 const civil = new Civil(position = game.at(5, 3), image = "civil.png")
-const flama0 = new Fuego(position = game.at(2, 6), danio = 40)
-    const flama1 = new Fuego(position = game.at(4, 2), danio = 40)//le agregué el danio a 40 para complejisar el juego
-    const flama2 = new Fuego(position = game.at(6, 5), danio = 40)
-    const flama3 = new Fuego(position = game.at(1, 1), danio = 40)
+const flama0 = new Fuego(position = game.at(2, 6), daño = 40)
+const flama1 = new Fuego(position = game.at(4, 2), daño = 40)   //le agregué el daño a 40 para complejizar el juego
+const flama2 = new Fuego(position = game.at(6, 5), daño = 40)
+const flama3 = new Fuego(position = game.at(1, 1), daño = 40)
 
 // iniciamos desde las opciones del menu
 
@@ -113,10 +125,7 @@ const flama0 = new Fuego(position = game.at(2, 6), danio = 40)
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
 
-    keyboard.up().onPressDo().apagarArriba()
-    keyboard.right().onPressDo().apagarALaDerecha()
-    keyboard.left().onPressDo().apagarALaIzquierda()
-    keyboard.down().onPressDo().apagarAbajo()
+
     
 
     game.onCollideDo(bombero, {

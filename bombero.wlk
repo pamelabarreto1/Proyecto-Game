@@ -69,6 +69,7 @@ object bombero {
      method apagarALaDerecha() {
         const celdaALaDerecha = self.position().right(1)
         const objetosEnCelda = celdaALaDerecha.getObjectsIn()
+        
         if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
             objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
             agua = agua - 25
@@ -78,6 +79,7 @@ object bombero {
     method apagarALaIzquierda() {
         const celdaALaIzquierda = self.position().left(1)
         const objetosEnCelda = game.getObjectsIn(celdaALaIzquierda)
+
         if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
             objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
         }
@@ -86,6 +88,7 @@ object bombero {
     method apagarAbajo() {
         const celdaAbajo = self.position().down(1)
         const objetosEnCelda = game.getObjectsIn(celdaAbajo)
+
         if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
             objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
         }
@@ -94,6 +97,7 @@ object bombero {
     method apagarArriba() {
         const celdaArriba = self.position().up(1)
         const objetosEnCelda = game.getObjectsIn(celdaArriba)
+
         if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
             objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
         }
