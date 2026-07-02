@@ -21,23 +21,18 @@ class Fuego {
     const property image = "flama.png"
     var property daño = 20
 
-    var estaApagado = false
 
-    method serApagado() {
-        estaApagado = true
-        game.removeVisual(self)
-    }
-
-    method interactuarCon(bombero) {
+ method interactuarCon(bombero) {
+        if(bombero.agua()>0){
+            bombero.apagar(self)
+        } else{
         bombero.quemarse(daño)
         game.say(bombero, "Auch, no tengo agua y me quemé!")
         if(bombero.energia() == 0) {
             game.say(bombero, "Sin energia para seguir")
-
-            administradorDeNivel1.cumplirObjetivo()
         }
     }
-
+}
     method esAtravesable() = true
 }
 

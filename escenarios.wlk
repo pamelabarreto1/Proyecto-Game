@@ -12,45 +12,81 @@ class AdministradorDeNivel {
         if (objetosPendientes == 0) {
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
 
-            if (gestorDeNivel.nivelActual() == 1) {
-                game.say(bombero, "Hay otros civiles que rescatar.")
+            if (gestorDeNivel.nivelActual() == 1) { 
+                menu.nivelDificilDesbloqueado(true) //se desbloquea el nivel dificil
+                game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
+                
                 game.schedule(2500, {
-                    game.clear()
-                    nivelDificil.iniciar()})
-            }
-            else {
-            game.say(bombero, "¡Misión Cumplida! Ganaste.")
-            game.schedule(500, {
-                    game.stop()
+                    game.clear() //borra el estado del nivel 1
+                    menu.iniciar() // volvemos al menu para ir al nivel 2
                 })
             }
+            else {
+                game.schedule(500, { game.stop() })
+            }
         }
-        
     }
 }
-
 const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 2)
 object gestorDeNivel {
     var property nivelActual = 0
 }
-
 object menu {
+    var property opcionSeleccionada = 1 
+    var property nivelDificilDesbloqueado = false 
+
     method iniciar() {
         game.addVisual(fondoMenu)
-        keyboard.f().onPressDo { self.empezarJuegoFacil() }
-        keyboard.d().onPressDo { self.empezarJuegoDificil() }
+        game.addVisual(cursorMenu) 
+        game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
+        game.addVisual(textoDificil)
+        
+        cursorMenu.position(game.at(1, 4)) //ubicado al lado del nivel facil.. le damos enter
+
+        keyboard.up().onPressDo { self.subir() }
+        keyboard.down().onPressDo { self.bajar() }
+        keyboard.enter().onPressDo { self.seleccionar() } //damos ENTER para arrancar el juego
     }
+
+    method subir() {
+        if (opcionSeleccionada == 2) {
+            opcionSeleccionada = 1
+            cursorMenu.position(game.at(1, 4)) // sube el cursor
+        }
+    }
+
+    method bajar() {
+        if (opcionSeleccionada == 1) {
+            opcionSeleccionada = 2
+            cursorMenu.position(game.at(1, 2)) //posicion en el nivel dificil
+        }
+    }
+
+    method seleccionar() {
+        if (opcionSeleccionada == 1) {
+            self.empezarJuegoFacil()
+        } else {
+            
+            if (nivelDificilDesbloqueado) {
+                self.empezarJuegoDificil()
+            } else {
+                game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
+            }
+        }
+    }
+
     method empezarJuegoFacil() {
         game.clear()
         gestorDeNivel.nivelActual(1)
         nivelFacil.iniciar()
     }
+
     method empezarJuegoDificil() {
         game.clear()
         gestorDeNivel.nivelActual(2)
         nivelDificil.iniciar()
     }
-} 
+}
 // ambos niveles son iguales, hay que cambiarlos.
 object nivelFacil {
 
@@ -64,10 +100,11 @@ const flama1 = new Fuego(position = game.at(3, 3))
 const flama2 = new Fuego(position = game.at(5, 4))
 const flama3 = new Fuego(position = game.at(2, 3))
 
-const salida = new Salida()
+const salida = new Salida(position = game.at(1, 1)) //representa en que posicion esta la salida, sino no la reconoce
 
     method iniciar() {
-    
+
+       
     game.addVisual(fondoNivel_1)
 
     game.addVisual(energiaBombero)
@@ -168,4 +205,20 @@ const salida = new Salida(position = game.at(0, 11))
         })
     }
 }
+object cursorMenu {
+    var property position = game.at(0, 0)
+    method image() = "cursor.png" 
+}
+object textoFacil {
+    var property position = game.at(3, 4) 
+    method text() = "NIVEL FÁCIL"
+    method textColor() = "000000" // color negro en hexadecimal
+   
+}
 
+object textoDificil {
+    var property position = game.at(3, 2) // ubicado abajo de la opción fácil
+    method text() = "NIVEL DIFÍCIL"
+    method textColor() = "000000" 
+   
+}

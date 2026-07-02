@@ -7,8 +7,8 @@ import civiles_y_fuego.*
 object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
-    var property agua = 3
-    var property energia = 100
+    var  agua = 0
+    var  energia = 100
     var property estaCargandoUnCivil = false 
     var civilCargado = null
 
@@ -97,45 +97,19 @@ object bombero {
         image = "bomberoPersonaje.png"
     }
 
-     method apagarALaDerecha() {
-        const celdaALaDerecha = self.position().right(1)
-        const objetosEnCelda = game.getObjectsIn(celdaALaDerecha)
-
-        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
-            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
-            agua = agua - 25
-        }
+         
+    method apagar(fuego){
+    
+        agua= agua-1
+        self.cansarse()
+        game.removeVisual(fuego)
+        game.say(self, "Fuego apagado!")
+    
     }
 
-    method apagarALaIzquierda() {
-        const celdaALaIzquierda = self.position().left(1)
-        const objetosEnCelda = game.getObjectsIn(celdaALaIzquierda)
-
-        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
-            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
-        }
-    }
-
-    method apagarAbajo() {
-        const celdaAbajo = self.position().down(1)
-        const objetosEnCelda = game.getObjectsIn(celdaAbajo)
-
-        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
-            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
-        }
-    }
-
-    method apagarArriba() {
-        const celdaArriba = self.position().up(1)
-        const objetosEnCelda = game.getObjectsIn(celdaArriba)
-
-        if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
-            objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
-        }
-    }
 
     method cargarAgua(){
-        self.agua(3) // le puse como limite 3 pero podemos configurarlo a mas
+        agua=3 //le puse como limite 3 pero podemos configurarlo a mas
         game.say(self, "Manguera cargada!")
     }
    
@@ -145,16 +119,16 @@ object bombero {
 
 // cartel para visualizar la energia del personaje
 object energiaBombero {
-    const property position = game.at(0, 6)
+    const property position = game.at(1, 6)
     method text() = bombero.energia().toString()
     method textColor() = "FF0000FF"
     method interactuarCon(bombero) {}
 
-    method esAtravesable() = true
+    method esAtravesable() = false
 }
 // objeto agregado para que el bombero "deje" al civil y vuelva a su estado base
 class Salida {
-    var property position = game.at(0, 0)
+    var property position = game.at(1, 1)
     const property image = "salida.png"
 
     method interactuarCon(bombero) {
