@@ -27,7 +27,7 @@ object bombero {
         if (self.seQuedoSinEnergia()) {
             game.say(self, "Me quede sin energia! Vuelve a intentarlo.")
             game.schedule(2500, {
-                    game.clear() //borra el estado del nivel 1
+                    game.clear() //borra el estado del nivel
                     menu.iniciar() // volvemos al menu para reintentar
                 })
         }
