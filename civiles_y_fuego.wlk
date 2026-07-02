@@ -1,5 +1,13 @@
 import escenarios.*
-class Civil {
+
+class Elemento {
+    
+    method interactuarCon(bombero)
+    method esAtravesable()
+
+}
+
+class Civil inherits Elemento{
     var property position
     const property image
 
@@ -9,20 +17,20 @@ class Civil {
         estaASalvo = true
     }
 
-    method interactuarCon(bombero) {
+    override method interactuarCon(bombero) {
         bombero.rescatar(self)
     }
 
-    method esAtravesable() = true
+    override method esAtravesable() = true
 }
 
-class Fuego {
+class Fuego inherits Elemento{
     const property position 
     const property image = "flama.png"
     var property daño = 20
 
 
- method interactuarCon(bombero) {
+    override method interactuarCon(bombero) {
         if(bombero.agua()>0){
             bombero.apagar(self)
         } else{
@@ -33,24 +41,25 @@ class Fuego {
         }
     }
 }
-    method esAtravesable() = true
+    override method esAtravesable() = true
 }
 
 
-object lago {
+object lago inherits Elemento{
     const property position = game.at(5, 5) 
     const property image = "lago.png" 
 
-    method interactuarCon(bombero) {
+    override method interactuarCon(bombero) {
         bombero.cargarAgua() 
     }
-    method esAtravesable() = true
+    
+    override method esAtravesable() = true
 }
 
-class MuroInvisible {
+class MuroInvisible inherits Elemento{
     const property image = "muroInvisible"
     const property position
 
-    method interactuarCon(bombero) {}
-    method esAtravesable() = false
+    override method interactuarCon(bombero) {}
+    override method esAtravesable() = false
 }
