@@ -1,9 +1,6 @@
 import escenarios.*
 import civiles_y_fuego.*
 
-
-
-
 object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
@@ -22,20 +19,30 @@ object bombero {
         agua = cantAgua
     }
 
+    method seQuedoSinEnergia(){
+        return self.energia() == 0
+    }
+
+    method fallarSiSeAgoto(){
+        if (self.seQuedoSinEnergia()) {
+            game.say(self, "Me quede sin energia! Vuelve a intentarlo.")
+            game.schedule(2500, {
+                    game.clear() //borra el estado del nivel 1
+                    menu.iniciar() // volvemos al menu para reintentar
+                })
+        }
+    }
+
     method cansarse() { // cada que movemos se cansa la energia baja en 1
         energia = (energia - 1).max(0)
-        if (self.energia() == 0) {
-            game.schedule(0, { game.stop() })
-        }
+        self.fallarSiSeAgoto()
     }
 
 // tocar el fuego baja "cantidad" de energia. Lo decide la clase Fuego (aca podemos hacer que varie el "daño" dependiendo la dificultad)
 
     method quemarse(cantidad) {
         energia = (energia - cantidad).max(0)
-        if (self.energia() == 0) {
-            game.schedule(0, { game.stop() })
-        }
+        self.fallarSiSeAgoto()  
     }
 
     method puedeIrA(nuevaPosicion) {

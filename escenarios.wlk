@@ -22,7 +22,11 @@ class AdministradorDeNivel {
                 })
             }
             else {
-                game.schedule(500, { game.stop() })
+                game.say(bombero, "No complete todos los objetivos! Vuelve a intentarlo.")
+                game.schedule(2500, {
+                    game.clear() //borra el estado del nivel 1
+                    menu.iniciar() // volvemos al menu para reintentar
+                })
             }
         }
     }
@@ -37,28 +41,31 @@ object menu {
 
     method iniciar() {
         game.addVisual(fondoMenu)
+        game.addVisual(textoMenu) 
         game.addVisual(cursorMenu) 
         game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
         game.addVisual(textoDificil)
         
-        cursorMenu.position(game.at(1, 4)) //ubicado al lado del nivel facil.. le damos enter
+        cursorMenu.position(game.at(5,3)) //ubicado al lado del nivel facil.. le damos enter
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
+        keyboard.w().onPressDo { self.subir() }
+        keyboard.s().onPressDo { self.bajar() }
         keyboard.enter().onPressDo { self.seleccionar() } //damos ENTER para arrancar el juego
     }
 
     method subir() {
         if (opcionSeleccionada == 2) {
             opcionSeleccionada = 1
-            cursorMenu.position(game.at(1, 4)) // sube el cursor
+            cursorMenu.position(game.at(5,3)) // sube el cursor
         }
     }
 
     method bajar() {
         if (opcionSeleccionada == 1) {
             opcionSeleccionada = 2
-            cursorMenu.position(game.at(1, 2)) //posicion en el nivel dificil
+            cursorMenu.position(game.at(5,1)) //posicion en el nivel dificil
         }
     }
 
@@ -86,11 +93,14 @@ object menu {
         gestorDeNivel.nivelActual(2)
         nivelDificil.iniciar()
     }
+    method volverAlMenu() {
+        game.clear()
+        self.iniciar()
+    }
 }
+
 // ambos niveles son iguales, hay que cambiarlos.
 object nivelFacil {
-
-
 
 const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
 const civil = new Civil(position = game.at(5, 3), image = "civil.png")
@@ -122,13 +132,16 @@ const salida = new Salida(position = game.at(1, 1)) //representa en que posicion
     keyboard.s().onPressDo({bombero.bajar()})
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
+
+    keyboard.up().onPressDo({bombero.subir()})
+    keyboard.down().onPressDo({bombero.bajar()})
+    keyboard.right().onPressDo({bombero.derecha()})
+    keyboard.left().onPressDo({bombero.izquierda()})
     
 
     game.onCollideDo(bombero, {
         objeto => objeto.interactuarCon(bombero)
         })
-
-
     }
 }
 
@@ -195,6 +208,15 @@ const salida = new Salida(position = game.at(0, 11))
     keyboard.d().onPressDo({bombero.derecha()})
     keyboard.a().onPressDo({bombero.izquierda()})
 
+    keyboard.up().onPressDo({bombero.subir()})
+    keyboard.down().onPressDo({bombero.bajar()})
+    keyboard.right().onPressDo({bombero.derecha()})
+    keyboard.left().onPressDo({bombero.izquierda()})
+
+    keyboard.backspace().onPressDo({menu.volverAlMenu()})
+
+
+
     keyboard.p().onPressDo({ 
             console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
         })
@@ -210,15 +232,18 @@ object cursorMenu {
     method image() = "cursor.png" 
 }
 object textoFacil {
-    var property position = game.at(3, 4) 
-    method text() = "NIVEL FÁCIL"
-    method textColor() = "000000" // color negro en hexadecimal
-   
+    method image() = "BotonFaci.png"
+    var property position = game.at(5,1)
+    //method text() = "NIVEL FÁCIL"
+    //method textColor() = "000000" // color negro en hexadecimal 
 }
-
 object textoDificil {
-    var property position = game.at(3, 2) // ubicado abajo de la opción fácil
-    method text() = "NIVEL DIFÍCIL"
-    method textColor() = "000000" 
-   
+    method image() = "BotonDifi.png"
+    var property position = game.at(5, -1) // ubicado abajo de la opción fácil
+    //method text() = "NIVEL DIFÍCIL"
+    //method textColor() = "000000" 
+}
+object textoMenu{
+    method image() = "Menu.png"
+    var property position = game.at(1, 1)
 }
