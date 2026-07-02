@@ -25,8 +25,8 @@ class AdministradorDeNivel {
                     self.limpiarYReiniciar()
                 })
             }
-            else {
-                game.say(bombero, "No complete todos los objetivos! Vuelve a intentarlo.")
+            if (gestorDeNivel.nivelActual() == 2) {
+                game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
                 game.schedule(2500, {
                     self.limpiarYReiniciar()
                 })
@@ -34,7 +34,7 @@ class AdministradorDeNivel {
         }
     }
 }
-const administradorDeNivel1 = new AdministradorDeNivel (objetosPendientes = 2)
+const administradorDeNivel = new AdministradorDeNivel (objetosPendientes = 2)
 object gestorDeNivel {
     var property nivelActual = 0
 }
@@ -134,6 +134,7 @@ object nivelFacil {
         game.addVisual(flama2)
         game.addVisual(flama1)
         game.addVisual(flama3)
+        bombero.prepararNivel(game.at(1,0) , 100, 0)
         game.addVisual(bombero)
         game.addVisual(salida)
 

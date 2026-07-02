@@ -9,7 +9,6 @@ object bombero {
     var property estaCargandoUnCivil = false 
     var civilCargado = null
 
-
     method energia() = energia
     method agua() = agua
 
@@ -17,6 +16,8 @@ object bombero {
         position = nuevaPosicion
         energia = nuevaEnergia
         agua = cantAgua
+        estaCargandoUnCivil = false
+        civilCargado = null
     }
 
     method seQuedoSinEnergia(){
@@ -26,10 +27,7 @@ object bombero {
     method fallarSiSeAgoto(){
         if (self.seQuedoSinEnergia()) {
             game.say(self, "Me quede sin energia! Vuelve a intentarlo.")
-            game.schedule(2500, {
-                    game.clear() //borra el estado del nivel
-                    menu.iniciar() // volvemos al menu para reintentar
-                })
+            administradorDeNivel.limpiarYReiniciar()
         }
     }
 
@@ -142,7 +140,7 @@ class Salida {
         if (bombero.estaCargandoUnCivil()) {
             bombero.dejarCivilEnSalida()
             game.say(bombero, "Un civil menos")
-            administradorDeNivel1.cumplirObjetivo()
+            administradorDeNivel.cumplirObjetivo()
         }
     }
 
