@@ -5,5 +5,5 @@ class Fondo {
 // cambien solo el nombre de los fondos con la imagen que pusieron incluyendo la extension
 
 const fondoMenu = new Fondo(image = "FondoEjemplo.png")
-const fondoNivel_1 = new Fondo(image = "fondolevel1.png")
-const fondoNivel_2 = new Fondo(image = "fondolevel1.png")
+const fondoNivel_1 = new Fondo(image = "nivel1.jpg")
+const fondoNivel_2 = new Fondo(image = "nivel1variante.jpg")

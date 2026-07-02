@@ -7,15 +7,21 @@ import civiles_y_fuego.*
 object bombero {
     var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
-    var agua = 3
-    var energia = 100
+    var property agua = 3
+    var property energia = 100
     var property estaCargandoUnCivil = false 
     var civilCargado = null
 
-    
+
     method energia() = energia
     method agua() = agua
-    
+
+    method prepararNivel(nuevaPosicion, nuevaEnergia, cantAgua) {
+        position = nuevaPosicion
+        energia = nuevaEnergia
+        agua = cantAgua
+    }
+
     method cansarse() { // cada que movemos se cansa la energia baja en 1
         energia = (energia - 1).max(0)
         if (self.energia() == 0) {
@@ -32,20 +38,45 @@ object bombero {
         }
     }
 
+    method puedeIrA(nuevaPosicion) {
+        const objetoEnPosicion = game.getObjectsIn(nuevaPosicion)
+
+        return objetoEnPosicion.all({o => o.esAtravesable()})
+    }
     method subir() {
-        position = position.up(1)
+        const proximo = position.up(1)
+
+        if (self.puedeIrA(proximo)){
+            position = proximo
+        }
+        
         self.cansarse()
     }
     method bajar() {
-        position = position.down(1)
+        const proximo = position.down(1)
+
+        if (self.puedeIrA(proximo)){
+            position = proximo
+        }
+        
         self.cansarse()
     }
     method derecha() {
-        position = position.right(1)
+        const proximo = position.right(1)
+
+        if (self.puedeIrA(proximo)){
+            position = proximo
+        }
+        
         self.cansarse()
     }
     method izquierda() {
-        position = position.left(1)
+        const proximo = position.left(1)
+
+        if (self.puedeIrA(proximo)){
+            position = proximo
+        }
+        
         self.cansarse()
     }
 
@@ -68,8 +99,8 @@ object bombero {
 
      method apagarALaDerecha() {
         const celdaALaDerecha = self.position().right(1)
-        const objetosEnCelda = celdaALaDerecha.getObjectsIn()
-        
+        const objetosEnCelda = game.getObjectsIn(celdaALaDerecha)
+
         if (objetosEnCelda.any({obj => obj.className() == "Fuego"}) && agua >= 1) {
             objetosEnCelda.filter({obj => obj.className() == "Fuego"}).forEach({f => f.serApagado()})
             agua = agua - 25
@@ -104,7 +135,7 @@ object bombero {
     }
 
     method cargarAgua(){
-        agua=3 //le puse como limite 3 pero podemos configurarlo a mas
+        self.agua(3) // le puse como limite 3 pero podemos configurarlo a mas
         game.say(self, "Manguera cargada!")
     }
    
@@ -117,10 +148,13 @@ object energiaBombero {
     const property position = game.at(0, 6)
     method text() = bombero.energia().toString()
     method textColor() = "FF0000FF"
+    method interactuarCon(bombero) {}
+
+    method esAtravesable() = true
 }
 // objeto agregado para que el bombero "deje" al civil y vuelva a su estado base
-object salida {
-    const property position = game.at(0, 0)
+class Salida {
+    var property position = game.at(0, 0)
     const property image = "salida.png"
 
     method interactuarCon(bombero) {
@@ -130,4 +164,6 @@ object salida {
             administradorDeNivel1.cumplirObjetivo()
         }
     }
+
+    method esAtravesable() = true
 }

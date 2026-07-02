@@ -3,9 +3,9 @@ import escenarios.*
 
 
 program juego {
-    game.width(10)
-    game.height(7)
-    game.cellSize(50)
+    game.width(16)
+    game.height(16)
+    game.cellSize(64)
 
 
     
@@ -13,3 +13,5 @@ program juego {
     game.start()
     
 }
+
+

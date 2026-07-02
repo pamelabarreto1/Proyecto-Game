@@ -12,6 +12,8 @@ class Civil {
     method interactuarCon(bombero) {
         bombero.rescatar(self)
     }
+
+    method esAtravesable() = true
 }
 
 class Fuego {
@@ -35,6 +37,8 @@ class Fuego {
             administradorDeNivel1.cumplirObjetivo()
         }
     }
+
+    method esAtravesable() = true
 }
 
 
@@ -45,4 +49,13 @@ object lago {
     method interactuarCon(bombero) {
         bombero.cargarAgua() 
     }
+    method esAtravesable() = true
+}
+
+class MuroInvisible {
+    const property image = "muroInvisible"
+    const property position
+
+    method interactuarCon(bombero) {}
+    method esAtravesable() = false
 }
