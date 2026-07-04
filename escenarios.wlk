@@ -57,7 +57,7 @@ object menu {
         game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
         game.addVisual(textoDificil)
         
-        cursorMenu.position(game.at(5,3)) //ubicado al lado del nivel facil.. le damos enter
+        cursorMenu.position(game.at(3,3)) //ubicado al lado del nivel facil.. le damos enter
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
@@ -69,14 +69,14 @@ object menu {
     method subir() {
         if (opcionSeleccionada == 2) {
             opcionSeleccionada = 1
-            cursorMenu.position(game.at(5,3)) // sube el cursor
+            cursorMenu.position(game.at(3,3)) // sube el cursor
         }
     }
 
     method bajar() {
         if (opcionSeleccionada == 1) {
             opcionSeleccionada = 2
-            cursorMenu.position(game.at(5,1)) //posicion en el nivel dificil
+            cursorMenu.position(game.at(3,1)) //posicion en el nivel dificil
         }
     }
 
@@ -233,21 +233,21 @@ object nivelDificil {
 }
 object cursorMenu {
     var property position = game.at(0, 0)
-    method image() = "cursor.png" 
+    method image() = "cursorEscalado.png" 
 }
 object textoFacil {
-    method image() = "BotonFaci.png"
-    var property position = game.at(5,1)
+    method image() = "BotonFaciEscalado.png"
+    var property position = game.at(4,1)
     //method text() = "NIVEL FÁCIL"
     //method textColor() = "000000" // color negro en hexadecimal 
 }
 object textoDificil {
-    method image() = "BotonDifi.png"
-    var property position = game.at(5, -1) // ubicado abajo de la opción fácil
+    method image() = "BotonDifiEscalado.png"
+    var property position = game.at(4, -1) // ubicado abajo de la opción fácil
     //method text() = "NIVEL DIFÍCIL"
     //method textColor() = "000000" 
 }
 object textoMenu{
-    method image() = "Menu.png"
-    var property position = game.at(1, 1)
+    method image() = "TituloMenuEscalado.png"
+    var property position = game.at(0, 3)
 }

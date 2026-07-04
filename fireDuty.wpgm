@@ -5,7 +5,7 @@ import escenarios.*
 program juego {
     game.width(16)
     game.height(16)
-    game.cellSize(40)
+    game.cellSize(64)
 
 
     

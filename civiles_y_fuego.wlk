@@ -56,8 +56,8 @@ object lago inherits Elemento{
     override method esAtravesable() = true
 }
 
-class MuroInvisible inherits Elemento{
-    const property image = "muroInvisible"
+class MuroInvisible inherits Elemento {
+    //const property image = "muroInvisible.png" si quieren que el muro sea invisible, hay que sacarle el metodo image
     const property position
 
     override method interactuarCon(bombero) {}
