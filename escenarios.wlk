@@ -158,28 +158,22 @@ object nivelFacil {
 
 object nivelDificil {
     // Creamos los objetos a usar en el nivel
-    const posicionDeMuros = [game.at(0, 0), game.at(0, 1), game.at(0, 2), game.at(0, 3), game.at(0, 4), 
-        game.at(0, 5), game.at(0, 6), game.at(0, 7), game.at(0, 8), game.at(0, 9), 
-        game.at(0, 10), game.at(0, 12), game.at(0, 13), game.at(0, 14), game.at(0, 15),
-        game.at(1, 1), game.at(1, 2), game.at(1, 5), game.at(1, 7), game.at(1, 15), 
-        game.at(2, 0), game.at(2, 5), game.at(2, 7), game.at(2, 15),
-        game.at(3, 0), game.at(3, 5), game.at(3, 6), game.at(3, 7), game.at(3, 10), 
-        game.at(3, 12), game.at(3, 15),
-        game.at(4, 0), game.at(4, 9), game.at(4, 10), game.at(4, 15),
-        game.at(5, 0), game.at(5, 4), game.at(5, 9), game.at(5, 10), game.at(5, 15),
-        game.at(6, 0), game.at(5, 4), game.at(6, 14), game.at(6, 15),
-        game.at(7, 0), game.at(7, 10), game.at(7, 14), game.at(7, 15),
-        game.at(8, 0), game.at(8, 10), game.at(8, 15),
-        game.at(9, 0), game.at(9, 15),
-        game.at(10, 0), game.at(10, 15),
-        game.at(11, 0), game.at(11, 15),
-        game.at(12, 0), game.at(12, 1), game.at(12, 2), game.at(12, 14), game.at(12, 15),
-        game.at(13, 0), game.at(13, 3), game.at(13, 14), game.at(13, 15),
-        game.at(14, 0), game.at(14, 3), game.at(14, 14), game.at(14, 15),
-        game.at(15, 0), game.at(15, 1), game.at(15, 2), game.at(15, 3), game.at(15, 4), 
-        game.at(15, 5), game.at(15, 6), game.at(15, 7), game.at(15, 8), game.at(15, 9), 
-        game.at(15, 10), game.at(15, 11), game.at(15, 12), game.at(15, 13), game.at(15, 14), 
-        game.at(15, 15)]
+    const posicionDeMuros = [game.at(0,3), game.at(0,4), game.at(0,8), game.at(0,11), game.at(0,12), game.at(0,13),
+                            game.at(1,1), game.at(1,2), game.at(1,5), game.at(1,7), game.at(1,9), game.at(1,10), game.at(1,14), 
+                            game.at(2,0), game.at(2,5), game.at(2,7), game.at(2,14), 
+                            game.at(3,0), game.at(3,5), game.at(3,6), game.at(3,7), game.at(3,10), game.at(3,15),
+                            game.at(4,0), game.at(4,9), game.at(4,11), game.at(4,15), 
+                            game.at(5,0), game.at(5,9), game.at(5,10), game.at(5,15),
+                            game.at(6,0), game.at(6,14), game.at(6,15), 
+                            game.at(7,0), game.at(7,9), game.at(7,10), game.at(7,14), game.at(7,15),
+                            game.at(8,0), game.at(8,9), game.at(8,10), game.at(8,15), 
+                            game.at(9,0), game.at(9,6), game.at(9,7), game.at(9,12), game.at(9,15),
+                            game.at(10,0), game.at(10,6), game.at(10,7), game.at(10,9), game.at(10,10), game.at(10,11), game.at(10,13), game.at(10,14),
+                            game.at(11,0), game.at(11,9), 
+                            game.at(12,1), game.at(12,2), game.at(12,9), 
+                            game.at(13,3), game.at(13,9),
+                            game.at(14,3), game.at(14,9),
+                            game.at(15,4), game.at(15,5), game.at(15,6), game.at(15,7), game.at(15,8)]
 
     const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
     const civil = new Civil(position = game.at(5, 3), image = "civil.png")

@@ -57,7 +57,7 @@ object lago inherits Elemento{
 }
 
 class MuroInvisible inherits Elemento {
-    //const property image = "muroInvisible.png" si quieren que el muro sea invisible, hay que sacarle el metodo image
+    const property image = "muroInvisible.png" //si quieren que el muro sea invisible, hay que sacarle el metodo image
     const property position
 
     override method interactuarCon(bombero) {}
