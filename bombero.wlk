@@ -52,36 +52,36 @@ object bombero {
 
         if (self.puedeIrA(proximo)){
             position = proximo
+            self.cansarse()
         }
         
-        self.cansarse()
     }
     method bajar() {
         const proximo = position.down(1)
 
         if (self.puedeIrA(proximo)){
             position = proximo
+            self.cansarse()
         }
         
-        self.cansarse()
     }
     method derecha() {
         const proximo = position.right(1)
 
         if (self.puedeIrA(proximo)){
             position = proximo
+            self.cansarse()
         }
         
-        self.cansarse()
     }
     method izquierda() {
         const proximo = position.left(1)
 
         if (self.puedeIrA(proximo)){
             position = proximo
+            self.cansarse()
         }
         
-        self.cansarse()
     }
 
     method rescatar(civil) {
@@ -92,6 +92,7 @@ object bombero {
             game.removeVisual(civil)
         }
     }
+    
     method dejarCivilEnSalida() {
         estaCargandoUnCivil = false
     }

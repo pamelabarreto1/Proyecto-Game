@@ -105,6 +105,7 @@ object menu {
     method empezarJuegoDificil() {
         game.clear()
         gestorDeNivel.nivelActual(2)
+        administradorDeNivel.objetosPendientes(14)
         nivelDificil.iniciar()
     }
     method volverAlMenu() {
