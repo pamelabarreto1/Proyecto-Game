@@ -109,6 +109,7 @@ object bombero {
         self.cansarse()
         game.removeVisual(fuego)
         game.say(self, "Fuego apagado!")
+        administradorDeNivel.cumplirObjetivo()
     
     }
 

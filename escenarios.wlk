@@ -34,7 +34,7 @@ class AdministradorDeNivel {
         }
     }
 }
-const administradorDeNivel = new AdministradorDeNivel (objetosPendientes = 2)
+const administradorDeNivel = new AdministradorDeNivel (objetosPendientes = 6)
 object gestorDeNivel {
     var property nivelActual = 0
 }
