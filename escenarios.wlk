@@ -34,10 +34,13 @@ class AdministradorDeNivel {
         }
     }
 }
+
 const administradorDeNivel = new AdministradorDeNivel (objetosPendientes = 6)
+
 object gestorDeNivel {
     var property nivelActual = 0
 }
+
 object menu {
     var property opcionSeleccionada = 1 
     var property nivelDificilDesbloqueado = false 
@@ -175,55 +178,72 @@ object nivelDificil {
                             game.at(14,3), game.at(14,9),
                             game.at(15,4), game.at(15,5), game.at(15,6), game.at(15,7), game.at(15,8)]
 
-    const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
-    const civil = new Civil(position = game.at(5, 3), image = "civil.png")
-    const flama0 = new Fuego(position = game.at(2, 6), daño = 40)
-    const flama1 = new Fuego(position = game.at(4, 2), daño = 40)   //le agregué el daño a 40 para complejizar el juego
-    const flama2 = new Fuego(position = game.at(6, 5), daño = 40)
-    const flama3 = new Fuego(position = game.at(1, 1), daño = 40)
+    const civil1 = new Civil(position = game.at(1, 12), image = "civil2.png")
+    const civil2 = new Civil(position = game.at(1, 4), image = "civil.png")
+    const civil3 = new Civil(position = game.at(8, 1), image = "civil.png")
+    const civil4 = new Civil(position = game.at(9, 14), image = "civil2.png")
+    const civil5 = new Civil(position = game.at(14, 7), image = "civil.png")
 
-    const salida = new Salida(position = game.at(0, 11))
+    const flama1 = new Fuego(position = game.at(1, 13), daño = 40)
+    const flama2 = new Fuego(position = game.at(2, 4), daño = 40)
+    const flama3 = new Fuego(position = game.at(2, 11), daño = 40)
+    const flama4 = new Fuego(position = game.at(8, 2), daño = 40)
+    const flama5 = new Fuego(position = game.at(8, 14), daño = 40)
+    const flama6 = new Fuego(position = game.at(9, 13), daño = 40)
+    const flama7 = new Fuego(position = game.at(13, 7), daño = 40)
+    const flama8 = new Fuego(position = game.at(13, 8), daño = 40)
+    const flama9 = new Fuego(position = game.at(14, 8), daño = 40)
+
+    const salida = new Salida(position = game.at(4, 14))
 
 // iniciamos desde las opciones del menu
     method iniciar() {
-    // primero se agrega el fondo
-    game.addVisual(fondoNivel_2)
+        // primero se agrega el fondo
+        game.addVisual(fondoNivel_2)
 
-    posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
+        posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
 
-    bombero.prepararNivel(game.at(1, 11) , 9000, 0)
+        bombero.prepararNivel(game.at(4, 14) , 160, 0)
 
-    game.addVisual(energiaBombero)
-    game.addVisual(civil1)
-    game.addVisual(civil)
-    game.addVisual(flama0)
-    game.addVisual(flama2)
-    game.addVisual(flama1)
-    game.addVisual(flama3)
-    game.addVisual(lago)
-    game.addVisual(bombero)
-    game.addVisual(salida)
+        game.addVisual(energiaBombero)
+        game.addVisual(civil1)
+        game.addVisual(civil2)
+        game.addVisual(civil3)
+        game.addVisual(civil4)
+        game.addVisual(civil5)
+        game.addVisual(flama1)
+        game.addVisual(flama2)
+        game.addVisual(flama3)
+        game.addVisual(flama4)
+        game.addVisual(flama5)
+        game.addVisual(flama6)
+        game.addVisual(flama7)
+        game.addVisual(flama8)
+        game.addVisual(flama9)
+        game.addVisual(lago)
+        game.addVisual(bombero)
+        game.addVisual(salida)
 
-    keyboard.w().onPressDo({bombero.subir()})
-    keyboard.s().onPressDo({bombero.bajar()})
-    keyboard.d().onPressDo({bombero.derecha()})
-    keyboard.a().onPressDo({bombero.izquierda()})
+        keyboard.w().onPressDo({bombero.subir()})
+        keyboard.s().onPressDo({bombero.bajar()})
+        keyboard.d().onPressDo({bombero.derecha()})
+        keyboard.a().onPressDo({bombero.izquierda()})
 
-    keyboard.up().onPressDo({bombero.subir()})
-    keyboard.down().onPressDo({bombero.bajar()})
-    keyboard.right().onPressDo({bombero.derecha()})
-    keyboard.left().onPressDo({bombero.izquierda()})
+        keyboard.up().onPressDo({bombero.subir()})
+        keyboard.down().onPressDo({bombero.bajar()})
+        keyboard.right().onPressDo({bombero.derecha()})
+        keyboard.left().onPressDo({bombero.izquierda()})
 
-    keyboard.backspace().onPressDo({menu.volverAlMenu()})
+        keyboard.backspace().onPressDo({menu.volverAlMenu()})
 
-    keyboard.p().onPressDo({ 
-            console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
-        })
-    
-    game.onCollideDo(bombero, {
-        objeto => objeto.interactuarCon(bombero)
-        })
-    }
+        keyboard.p().onPressDo({ 
+                console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
+            })
+        
+        game.onCollideDo(bombero, {
+            objeto => objeto.interactuarCon(bombero)
+            })
+        }
 }
 object cursorMenu {
     var property position = game.at(0, 0)
