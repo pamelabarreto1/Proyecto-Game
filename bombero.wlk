@@ -2,12 +2,12 @@ import escenarios.*
 import civiles_y_fuego.*
 
 object bombero {
-    var property image = "bomberoPersonaje.png"
     var property position = game.at(1,0)
     var  agua = 0
     var  energia = 100
     var property estaCargandoUnCivil = false 
-    var civilCargado = null
+
+    method image() = if (estaCargandoUnCivil) "bomberoRescate.png" else "bomberoPersonaje.png"
 
     method energia() = energia
     method agua() = agua
@@ -17,7 +17,6 @@ object bombero {
         energia = nuevaEnergia
         agua = cantAgua
         estaCargandoUnCivil = false
-        civilCargado = null
     }
 
     method seQuedoSinEnergia(){
@@ -90,16 +89,11 @@ object bombero {
             game.say(self, "Antes tengo que dejar al civil en un lugar seguro")
         } else {
             estaCargandoUnCivil = true
-            civilCargado = civil
-            image = "bomberoRescate.png"
             game.removeVisual(civil)
         }
     }
     method dejarCivilEnSalida() {
         estaCargandoUnCivil = false
-        civilCargado.serSalvado()
-        civilCargado = null
-        image = "bomberoPersonaje.png"
     }
 
          
