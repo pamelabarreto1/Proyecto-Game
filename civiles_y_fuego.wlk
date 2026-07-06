@@ -11,12 +11,6 @@ class Civil inherits Elemento{
     var property position
     const property image
 
-    var estaASalvo = false
-
-    method serSalvado() {
-        estaASalvo = true
-    }
-
     override method interactuarCon(bombero) {
         bombero.rescatar(self)
     }
@@ -31,16 +25,17 @@ class Fuego inherits Elemento{
 
 
     override method interactuarCon(bombero) {
-        if(bombero.agua()>0){
+        if (bombero.agua() > 0) {
             bombero.apagar(self)
-        } else{
-        bombero.quemarse(daño)
-        game.say(bombero, "Auch, no tengo agua y me quemé!")
-        if(bombero.energia() == 0) {
-            game.say(bombero, "Sin energia para seguir")
+        } 
+        else {
+            bombero.quemarse(daño)
+            game.say(bombero, "Auch, no tengo agua y me quemé!")
+            if (bombero.energia() == 0) {
+                game.say(bombero, "Sin energia para seguir")
+            }
         }
     }
-}
     override method esAtravesable() = true
 }
 
@@ -57,7 +52,7 @@ object lago inherits Elemento{
 }
 
 class MuroInvisible inherits Elemento {
-    //const property image = "muroInvisible.png"
+
     const property position
 
     override method interactuarCon(bombero) {}

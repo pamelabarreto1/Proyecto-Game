@@ -18,7 +18,9 @@ class AdministradorDeNivel {
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
 
             if (gestorDeNivel.nivelActual() == 1) { 
-                menu.nivelDificilDesbloqueado(true) //se desbloquea el nivel dificil
+                menu.nivelDificilDesbloqueado(true) // se desbloquea el nivel dificil
+
+                // -- podria agregar bombero.energia(0) para que se quede quieto el personaje.
                 game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
                 
                 game.schedule(2500, {
@@ -48,6 +50,9 @@ object menu {
     var laMusicaSuena = false
     
     method iniciar() {
+        //para evitar un bug que cuando se pierde en nivel dificil la opcionSeleccionada sea de nuevo facil.
+        self.opcionSeleccionada(1)
+
         musicaDeFondo.shouldLoop(true)
         musicaDeFondo.volume(0.5)
         if (!laMusicaSuena) {
@@ -60,12 +65,14 @@ object menu {
         game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
         game.addVisual(textoDificil)
         
-        cursorMenu.position(game.at(3,3)) //ubicado al lado del nivel facil.. le damos enter
+        cursorMenu.position(game.at(3,3)) // ubicado al lado del nivel facil.. le damos enter
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
+
         keyboard.w().onPressDo { self.subir() }
         keyboard.s().onPressDo { self.bajar() }
+
         keyboard.enter().onPressDo { self.seleccionar()} //damos ENTER para arrancar el juego
     }
 
@@ -99,6 +106,7 @@ object menu {
     method empezarJuegoFacil() {
         game.clear()
         gestorDeNivel.nivelActual(1)
+        administradorDeNivel.objetosPendientes(6)
         nivelFacil.iniciar()
     }
 
@@ -125,10 +133,12 @@ object nivelFacil {
     const flama2 = new Fuego(position = game.at(5, 4))
     const flama3 = new Fuego(position = game.at(2, 3))
 
-    const salida = new Salida(position = game.at(1, 1)) //representa en que posicion esta la salida, sino no la reconoce
+    const salida = new Salida(position = game.at(1, 1)) // representa en que posicion esta la salida, sino no la reconoce
 
     method iniciar() {
         game.addVisual(fondoNivel_1)
+    
+        bombero.prepararNivel(game.at(1,0) , 100, 0)
 
         game.addVisual(energiaBombero)
         game.addVisual(civil1)
@@ -138,7 +148,6 @@ object nivelFacil {
         game.addVisual(flama2)
         game.addVisual(flama1)
         game.addVisual(flama3)
-        bombero.prepararNivel(game.at(1,0) , 100, 0)
         game.addVisual(bombero)
         game.addVisual(salida)
 

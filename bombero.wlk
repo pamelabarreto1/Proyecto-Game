@@ -35,7 +35,8 @@ object bombero {
         self.fallarSiSeAgoto()
     }
 
-// tocar el fuego baja "cantidad" de energia. Lo decide la clase Fuego (aca podemos hacer que varie el "daño" dependiendo la dificultad)
+// tocar el fuego baja "cantidad" de energia. Lo decide la clase Fuego
+// (aca podemos hacer que varie el "daño" dependiendo la dificultad)
 
     method quemarse(cantidad) {
         energia = (energia - cantidad).max(0)
@@ -87,7 +88,8 @@ object bombero {
     method rescatar(civil) {
         if (estaCargandoUnCivil) {
             game.say(self, "Antes tengo que dejar al civil en un lugar seguro")
-        } else {
+        } 
+        else {
             estaCargandoUnCivil = true
             game.removeVisual(civil)
         }
@@ -100,7 +102,7 @@ object bombero {
          
     method apagar(fuego){
     
-        agua= agua-1
+        agua = agua - 1
         self.cansarse()
         game.removeVisual(fuego)
         game.say(self, "Fuego apagado!")
@@ -110,7 +112,7 @@ object bombero {
 
 
     method cargarAgua(){
-        agua=3 //le puse como limite 3 pero podemos configurarlo a mas
+        agua = 3 // le puse como limite 3 pero podemos configurarlo a mas
         game.say(self, "Manguera cargada!")
     }
    
@@ -120,16 +122,16 @@ object bombero {
 
 // cartel para visualizar la energia del personaje
 object energiaBombero {
-    const property position = game.at(1, 6)
-    method text() = bombero.energia().toString()
-    method textColor() = "FF0000FF"
+    var property position = game.at(2, 14)
+    method text() = "Energía Restante:" + " " + bombero.energia().toString()
+    method textColor() = "FFFFFFFF"
     method interactuarCon(bombero) {}
 
-    method esAtravesable() = false
+    method esAtravesable() = true
 }
 // objeto agregado para que el bombero "deje" al civil y vuelva a su estado base
 class Salida {
-    var property position = game.at(1, 1)
+    var property position
     const property image = "salida.png"
 
     method interactuarCon(bombero) {
