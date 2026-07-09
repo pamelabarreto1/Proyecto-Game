@@ -2,6 +2,7 @@ import wollok.game.*
 import bombero.*
 import civiles_y_fuego.*
 import fondos.*
+import logros.*
 
 class AdministradorDeNivel {
     var property objetosPendientes 
@@ -64,6 +65,7 @@ object menu {
         game.addVisual(cursorMenu) 
         game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
         game.addVisual(textoDificil)
+        game.addVisual(trofeo)
         
         cursorMenu.position(game.at(3,3)) // ubicado al lado del nivel facil.. le damos enter
 
@@ -74,6 +76,8 @@ object menu {
         keyboard.s().onPressDo { self.bajar() }
 
         keyboard.enter().onPressDo { self.seleccionar()} //damos ENTER para arrancar el juego
+
+        keyboard.q().onPressDo { pestañaLogros.iniciar()} // damos q para poner logros
     }
 
     method subir() {
@@ -119,6 +123,11 @@ object menu {
     method volverAlMenu() {
         game.clear()
         self.iniciar()
+    }
+
+    method irALogros() {
+        game.clear()
+        pestañaLogros.iniciar()
     }
 }
 
@@ -274,4 +283,30 @@ object textoDificil {
 object textoMenu{
     method image() = "TituloMenuEscalado.png"
     var property position = game.at(0, 3)
+}
+
+
+
+object pestañaLogros {
+    const logro1 = new LogroNiveles(position = game.at(2, 13))
+    const logro2 = new LogroNiveles(position = game.at(8, 13))
+    const logro3 = new LogroRescates(position = game.at(2, 10), metaRescates = 3)
+    const logro4 = new LogroRescates(position = game.at(8, 10), metaRescates = 20)
+    const logro5 = new LogroIncendios(position = game.at(2, 7), metaApagar = 5)
+    const logro6 = new LogroIncendios(position = game.at(8, 7), metaApagar = 15)
+    
+
+    method iniciar() {
+        game.addVisual(fondoLogros)
+
+        game.addVisual(logro1)
+        game.addVisual(logro2)
+        game.addVisual(logro3)
+        game.addVisual(logro4)
+        game.addVisual(logro5)
+        game.addVisual(logro6)
+
+        keyboard.backspace().onPressDo({menu.volverAlMenu()})
+    }
+    
 }

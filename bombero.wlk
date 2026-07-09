@@ -1,5 +1,6 @@
 import escenarios.*
 import civiles_y_fuego.*
+import logros.*
 
 object bombero {
     var property position = game.at(1,0)
@@ -107,6 +108,7 @@ object bombero {
         game.removeVisual(fuego)
         game.say(self, "Fuego apagado!")
         administradorDeNivel.cumplirObjetivo()
+        logro.sumarIncendiosApagados()
     
     }
 
@@ -139,6 +141,7 @@ class Salida {
             bombero.dejarCivilEnSalida()
             game.say(bombero, "Un civil menos")
             administradorDeNivel.cumplirObjetivo()
+            logro.sumarRescate()
         }
     }
 
