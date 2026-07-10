@@ -2,6 +2,7 @@ import wollok.game.*
 import bombero.*
 import civiles_y_fuego.*
 import fondos.*
+import logros.*
 
 class AdministradorDeNivel {
     var property objetosPendientes 
@@ -22,6 +23,7 @@ class AdministradorDeNivel {
 
                 // -- podria agregar bombero.energia(0) para que se quede quieto el personaje.
                 game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
+                nivel1Completado.completar()
                 
                 game.schedule(2500, {
                     self.limpiarYReiniciar()
@@ -29,6 +31,7 @@ class AdministradorDeNivel {
             }
             if (gestorDeNivel.nivelActual() == 2) {
                 game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
+                nivel2Completado.completar()
                 game.schedule(2500, {
                     self.limpiarYReiniciar()
                 })
@@ -64,6 +67,7 @@ object menu {
         game.addVisual(cursorMenu) 
         game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
         game.addVisual(textoDificil)
+        game.addVisual(trofeo)
         
         cursorMenu.position(game.at(3,3)) // ubicado al lado del nivel facil.. le damos enter
 
@@ -74,6 +78,8 @@ object menu {
         keyboard.s().onPressDo { self.bajar() }
 
         keyboard.enter().onPressDo { self.seleccionar()} //damos ENTER para arrancar el juego
+
+        keyboard.q().onPressDo { pestañaLogros.iniciar()} // damos q para poner logros
     }
 
     method subir() {
@@ -91,14 +97,17 @@ object menu {
     }
 
     method seleccionar() {
-        if (opcionSeleccionada == 1) {
+        if (opcionSeleccionada == 1 and not pestañaLogros.estaEnLogros()) {
             self.empezarJuegoFacil()
         } else {
             
-            if (nivelDificilDesbloqueado) {
+            if (nivelDificilDesbloqueado and not pestañaLogros.estaEnLogros()) {
                 self.empezarJuegoDificil()
             } else {
-                game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
+                if (not pestañaLogros.estaEnLogros()) {
+                    game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
+                }
+                
             }
         }
     }
@@ -119,6 +128,11 @@ object menu {
     method volverAlMenu() {
         game.clear()
         self.iniciar()
+    }
+
+    method irALogros() {
+        game.clear()
+        pestañaLogros.iniciar()
     }
 }
 
@@ -303,4 +317,37 @@ object textoDificil {
 object textoMenu{
     method image() = "TituloMenuEscalado.png"
     var property position = game.at(0, 3)
+}
+
+
+
+object pestañaLogros {
+    var estaEnLogros = false
+    method estaEnLogros() = estaEnLogros
+    method cambiarEstaEnLogros(unbool) {
+        estaEnLogros = unbool
+    }
+    const logro1 = new LogroNiveles(position = game.at(2, 13), nivelSeleccionado = nivel1Completado)
+    const logro2 = new LogroNiveles(position = game.at(8, 13), nivelSeleccionado = nivel2Completado)
+    const logro3 = new LogroRescates(position = game.at(2, 10), metaRescates = 3)
+    const logro4 = new LogroRescates(position = game.at(8, 10), metaRescates = 20)
+    const logro5 = new LogroIncendios(position = game.at(2, 7), metaApagar = 5)
+    const logro6 = new LogroIncendios(position = game.at(8, 7), metaApagar = 15)
+    
+
+    method iniciar() {
+        self.cambiarEstaEnLogros(true)
+        game.addVisual(fondoLogros)
+
+        game.addVisual(logro1)
+        game.addVisual(logro2)
+        game.addVisual(logro3)
+        game.addVisual(logro4)
+        game.addVisual(logro5)
+        game.addVisual(logro6)
+
+        keyboard.backspace().onPressDo({menu.volverAlMenu()})
+        keyboard.backspace().onPressDo({self.cambiarEstaEnLogros(false)})
+    }
+    
 }

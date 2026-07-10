@@ -7,3 +7,4 @@ class Fondo {
 const fondoMenu = new Fondo(image = "FondoMenuEscalado.png")
 const fondoNivel_1 = new Fondo(image = "nivel1.jpg")
 const fondoNivel_2 = new Fondo(image = "nivel2.jpg")
+const fondoLogros = new Fondo(image = "fondoLogros.png")
