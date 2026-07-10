@@ -97,14 +97,17 @@ object menu {
     }
 
     method seleccionar() {
-        if (opcionSeleccionada == 1) {
+        if (opcionSeleccionada == 1 and not pestañaLogros.estaEnLogros()) {
             self.empezarJuegoFacil()
         } else {
             
-            if (nivelDificilDesbloqueado) {
+            if (nivelDificilDesbloqueado and not pestañaLogros.estaEnLogros()) {
                 self.empezarJuegoDificil()
             } else {
-                game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
+                if (not pestañaLogros.estaEnLogros()) {
+                    game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
+                }
+                
             }
         }
     }
@@ -290,6 +293,11 @@ object textoMenu{
 
 
 object pestañaLogros {
+    var estaEnLogros = false
+    method estaEnLogros() = estaEnLogros
+    method cambiarEstaEnLogros(unbool) {
+        estaEnLogros = unbool
+    }
     const logro1 = new LogroNiveles(position = game.at(2, 13), nivelSeleccionado = nivel1Completado)
     const logro2 = new LogroNiveles(position = game.at(8, 13), nivelSeleccionado = nivel2Completado)
     const logro3 = new LogroRescates(position = game.at(2, 10), metaRescates = 3)
@@ -299,6 +307,7 @@ object pestañaLogros {
     
 
     method iniciar() {
+        self.cambiarEstaEnLogros(true)
         game.addVisual(fondoLogros)
 
         game.addVisual(logro1)
@@ -309,6 +318,7 @@ object pestañaLogros {
         game.addVisual(logro6)
 
         keyboard.backspace().onPressDo({menu.volverAlMenu()})
+        keyboard.backspace().onPressDo({self.cambiarEstaEnLogros(false)})
     }
     
 }

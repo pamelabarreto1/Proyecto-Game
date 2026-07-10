@@ -57,6 +57,3 @@ object trofeo {
     var property position = game.at(1, 1)
     method image() ="trofeoOro.png"
 }
-
-// hacer que no empieze el nivel mientras este en la pestaña de logros
-// hacer que hagan los 2 primeros logros bien
