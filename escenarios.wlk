@@ -23,6 +23,7 @@ class AdministradorDeNivel {
 
                 // -- podria agregar bombero.energia(0) para que se quede quieto el personaje.
                 game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
+                nivel1Completado.completar()
                 
                 game.schedule(2500, {
                     self.limpiarYReiniciar()
@@ -30,6 +31,7 @@ class AdministradorDeNivel {
             }
             if (gestorDeNivel.nivelActual() == 2) {
                 game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
+                nivel2Completado.completar()
                 game.schedule(2500, {
                     self.limpiarYReiniciar()
                 })
@@ -288,8 +290,8 @@ object textoMenu{
 
 
 object pestañaLogros {
-    const logro1 = new LogroNiveles(position = game.at(2, 13))
-    const logro2 = new LogroNiveles(position = game.at(8, 13))
+    const logro1 = new LogroNiveles(position = game.at(2, 13), nivelSeleccionado = nivel1Completado)
+    const logro2 = new LogroNiveles(position = game.at(8, 13), nivelSeleccionado = nivel2Completado)
     const logro3 = new LogroRescates(position = game.at(2, 10), metaRescates = 3)
     const logro4 = new LogroRescates(position = game.at(8, 10), metaRescates = 20)
     const logro5 = new LogroIncendios(position = game.at(2, 7), metaApagar = 5)

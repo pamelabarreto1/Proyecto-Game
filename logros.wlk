@@ -18,9 +18,25 @@ class Logro {
 }
 
 class LogroNiveles inherits Logro {
+    const nivelSeleccionado
     override method estaCompleto() {
-        return true
+        return nivelSeleccionado.estaCompleto()
     }
+}
+
+object nivel1Completado {
+    var estaCompletado = false
+    method completar() {
+        estaCompletado = true
+    }
+    method estaCompleto() = estaCompletado
+}
+object nivel2Completado {
+    var estaCompletado = false
+    method completar() {
+        estaCompletado = true
+    }
+    method estaCompleto() = estaCompletado
 }
 
 class LogroRescates inherits Logro {
@@ -43,3 +59,4 @@ object trofeo {
 }
 
 // hacer que no empieze el nivel mientras este en la pestaña de logros
+// hacer que hagan los 2 primeros logros bien
