@@ -197,7 +197,7 @@ object nivelFacil {
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
         game.addVisual(fondoNivel_1)
     
-        bombero.prepararNivel(game.at(2, 13) , 200, 0)
+        bombero.prepararNivel(game.at(2, 13) , 300, 0)
 
         game.addVisual(energiaBombero)
         game.addVisual(civil2)
