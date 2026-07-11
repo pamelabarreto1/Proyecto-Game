@@ -26,10 +26,10 @@ object bombero {
 
     method fallarSiSeAgoto(){
         if (self.seQuedoSinEnergia()) {
-            game.say(self, "Me quede sin energia! Vuelve a intentarlo.")
-            administradorDeNivel.limpiarYReiniciar()
+            administradorDeNivel.perderJuego() 
         }
     }
+ 
 
     method cansarse() { // cada que movemos se cansa la energia baja en 1
         energia = (energia - 1).max(0)

@@ -12,6 +12,15 @@ class AdministradorDeNivel {
         menu.iniciar()
     }
 
+    method perderJuego() {
+        game.clear() //limpiamos todo el escenario
+        game.addVisual(fondoGameOver) // mostramos el game over por derrota
+        
+   
+        keyboard.space().onPressDo({ //con la tecla space volvemos al menu
+            self.limpiarYReiniciar()
+        })
+    }
     method cumplirObjetivo() {
         objetosPendientes = objetosPendientes - 1
 
