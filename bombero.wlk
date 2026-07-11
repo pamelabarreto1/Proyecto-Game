@@ -131,6 +131,14 @@ object energiaBombero {
 
     method esAtravesable() = true
 }
+object cantidadDeAguaBombero {
+    var property position = game.at(2, 13)
+    method text() = "Agua Restante:" + " " + bombero.agua().toString()
+    method textColor() = "FFFFFFFF"
+    method interactuarCon(bombero) {}
+
+    method esAtravesable() = true
+}
 // objeto agregado para que el bombero "deje" al civil y vuelva a su estado base
 class Salida {
     var property position

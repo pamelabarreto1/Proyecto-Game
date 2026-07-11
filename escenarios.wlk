@@ -191,15 +191,16 @@ object nivelFacil {
     const flama8 = new Fuego(position = game.at(3, 1), daño = 40)
     const flama9 = new Fuego(position = game.at(10, 1), daño = 40)
 
-    const salida = new Salida(position = game.at(1, 13)) // representa en que posicion esta la salida, sino no la reconoce
+    const salida = new Salida(position = game.at(1, 12)) // representa en que posicion esta la salida, sino no la reconoce
 
     method iniciar() {
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
         game.addVisual(fondoNivel_1)
     
-        bombero.prepararNivel(game.at(2, 13) , 300, 0)
+        bombero.prepararNivel(game.at(2, 12) , 300, 0)
 
         game.addVisual(energiaBombero)
+        game.addVisual(cantidadDeAguaBombero)
         game.addVisual(civil2)
         game.addVisual(civil3)
         game.addVisual(civil4)
@@ -286,9 +287,10 @@ object nivelDificil {
 
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
 
-        bombero.prepararNivel(game.at(4, 14) , 160, 0)
+        bombero.prepararNivel(game.at(3, 14) , 160, 0)
 
         game.addVisual(energiaBombero)
+        game.addVisual(cantidadDeAguaBombero)
         game.addVisual(civil1)
         game.addVisual(civil2)
         game.addVisual(civil3)
