@@ -114,7 +114,7 @@ object bombero {
 
 
     method cargarAgua(){
-        agua = 3 // le puse como limite 3 pero podemos configurarlo a mas
+        agua = 5 // le puse como limite 5 pero podemos configurarlo a mas
         game.say(self, "Manguera cargada!")
     }
    
