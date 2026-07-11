@@ -8,10 +8,10 @@ program juego {
     game.cellSize(64)
 
 
-    
     menu.iniciar()
     game.start()
     
 }
+
 
 

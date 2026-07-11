@@ -31,13 +31,12 @@ object bombero {
     }
  
 
-    method cansarse() { // cada que movemos se cansa la energia baja en 1
+    method cansarse() { 
         energia = (energia - 1).max(0)
         self.fallarSiSeAgoto()
     }
 
-// tocar el fuego baja "cantidad" de energia. Lo decide la clase Fuego
-// (aca podemos hacer que varie el "daño" dependiendo la dificultad)
+
 
     method quemarse(cantidad) {
         energia = (energia - cantidad).max(0)
@@ -114,7 +113,7 @@ object bombero {
 
 
     method cargarAgua(){
-        agua = 5 // le puse como limite 5 pero podemos configurarlo a mas
+        agua = 5 
         game.say(self, "Manguera cargada!")
     }
    
@@ -122,7 +121,6 @@ object bombero {
 
 }
 
-// cartel para visualizar la energia del personaje
 object energiaBombero {
     var property position = game.at(2, 14)
     method text() = "Energía Restante:" + " " + bombero.energia().toString()
@@ -139,7 +137,7 @@ object cantidadDeAguaBombero {
 
     method esAtravesable() = true
 }
-// objeto agregado para que el bombero "deje" al civil y vuelva a su estado base
+
 class Salida {
     var property position
     const property image = "salida.png"

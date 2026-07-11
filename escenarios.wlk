@@ -62,7 +62,7 @@ object menu {
     var laMusicaSuena = false
     
     method iniciar() {
-        //para evitar un bug que cuando se pierde en nivel dificil la opcionSeleccionada sea de nuevo facil.
+        
         self.opcionSeleccionada(1)
 
         musicaDeFondo.shouldLoop(true)
@@ -74,11 +74,11 @@ object menu {
         game.addVisual(fondoMenu)
         game.addVisual(textoMenu) 
         game.addVisual(cursorMenu) 
-        game.addVisual(textoFacil) //falta editar el menu para dejarlo mas lindo
+        game.addVisual(textoFacil) 
         game.addVisual(textoDificil)
         game.addVisual(trofeo)
         
-        cursorMenu.position(game.at(3,3)) // ubicado al lado del nivel facil.. le damos enter
+        cursorMenu.position(game.at(3,3)) 
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
@@ -86,22 +86,22 @@ object menu {
         keyboard.w().onPressDo { self.subir() }
         keyboard.s().onPressDo { self.bajar() }
 
-        keyboard.enter().onPressDo { self.seleccionar()} //damos ENTER para arrancar el juego
+        keyboard.enter().onPressDo { self.seleccionar()} 
 
-        keyboard.q().onPressDo { pestañaLogros.iniciar()} // damos q para poner logros
+        keyboard.q().onPressDo { pestañaLogros.iniciar()} 
     }
 
     method subir() {
         if (opcionSeleccionada == 2) {
             opcionSeleccionada = 1
-            cursorMenu.position(game.at(3,3)) // sube el cursor
+            cursorMenu.position(game.at(3,3)) 
         }
     }
 
     method bajar() {
         if (opcionSeleccionada == 1) {
             opcionSeleccionada = 2
-            cursorMenu.position(game.at(3,1)) //posicion en el nivel dificil
+            cursorMenu.position(game.at(3,1)) 
         }
     }
 
@@ -145,7 +145,7 @@ object menu {
     }
 }
 
-// ambos niveles son iguales, hay que cambiarlos.
+
 object nivelFacil {
 
     const posicionDeMuros = [game.at(0, 1), game.at(0, 2), game.at(0, 3), game.at(0, 4),
@@ -191,7 +191,7 @@ object nivelFacil {
     const flama8 = new Fuego(position = game.at(3, 1), daño = 40)
     const flama9 = new Fuego(position = game.at(10, 1), daño = 40)
 
-    const salida = new Salida(position = game.at(1, 12)) // representa en que posicion esta la salida, sino no la reconoce
+    const salida = new Salida(position = game.at(1, 12)) 
 
     method iniciar() {
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
@@ -244,7 +244,7 @@ object nivelFacil {
     }
 
 object nivelDificil {
-    // Creamos los objetos a usar en el nivel
+    
     const posicionDeMuros = [game.at(0,3), game.at(0,4), game.at(0,8), game.at(0,11), game.at(0,12), game.at(0,13),
                             game.at(1,1), game.at(1,2), game.at(1,5), game.at(1,7), game.at(1,9), game.at(1,10), game.at(1,14), 
                             game.at(2,0), game.at(2,5), game.at(2,7), game.at(2,14), 
@@ -280,9 +280,8 @@ object nivelDificil {
 
     const salida = new Salida(position = game.at(4, 14))
 
-// iniciamos desde las opciones del menu
     method iniciar() {
-        // primero se agrega el fondo
+        
         game.addVisual(fondoNivel_2)
 
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
@@ -330,6 +329,9 @@ object nivelDificil {
             })
         }
 }
+
+// class
+
 object cursorMenu {
     var property position = game.at(0, 0)
     method image() = "cursorEscalado.png" 
@@ -337,14 +339,10 @@ object cursorMenu {
 object textoFacil {
     method image() = "BotonFaciEscalado.png"
     var property position = game.at(4,1)
-    //method text() = "NIVEL FÁCIL"
-    //method textColor() = "000000" // color negro en hexadecimal 
 }
 object textoDificil {
     method image() = "BotonDifiEscalado.png"
-    var property position = game.at(4, -1) // ubicado abajo de la opción fácil
-    //method text() = "NIVEL DIFÍCIL"
-    //method textColor() = "000000" 
+    var property position = game.at(4, -1)
 }
 object textoMenu{
     method image() = "TituloMenuEscalado.png"
