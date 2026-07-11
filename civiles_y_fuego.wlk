@@ -41,7 +41,7 @@ class Fuego inherits Elemento{
 
 
 object lago inherits Elemento{
-    const property position = game.at(5, 5) 
+    const property position = game.at(5, 5)
     const property image = "lago.png" 
 
     override method interactuarCon(bombero) {

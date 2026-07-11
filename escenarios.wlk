@@ -148,39 +148,56 @@ object menu {
 // ambos niveles son iguales, hay que cambiarlos.
 object nivelFacil {
 
-    const posicionDeMuros = [game.at(0, 0), game.at(0, 1), game.at(0, 2), game.at(0,3), game.at(0, 4), game.at(0, 5), game.at(0, 6), game.at(0, 7), game.at(0, 8), game.at(0, 9)
-    , game.at(0, 10), game.at(0, 11), game.at(0, 12), game.at(0, 13), game.at(0, 14), game.at(0, 15), game.at(1, 0), game.at(2, 0), game.at(3, 0), game.at(4, 0), game.at(5, 0),
-    game.at(6, 0), game.at(7, 0), game.at(8, 0), game.at(9, 0), game.at(10, 0), game.at(11, 0), game.at(12, 0), game.at(13, 0), game.at(14, 0), game.at(15, 0),
-    game.at(15, 1), game.at(15, 2), game.at(15, 3), game.at(15, 4), game.at(15, 5), game.at(15, 6), game.at(15, 7), game.at(15, 8), game.at(15, 9), game.at(15, 10), game.at(15, 11),
-    game.at(15, 12), game.at(15, 13), game.at(15, 14), game.at(15, 15), game.at(1, 15), game.at(2, 15), game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15),
-    game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 15), game.at(12, 15), game.at(13, 15), game.at(14, 15), game.at(1, 5), game.at(2, 5), game.at(1, 6), game.at(2, 6),
-    game.at(1, 7), game.at(2, 7), game.at(11, 5), game.at(12, 5), game.at(13, 5), game.at(10, 10), game.at(8, 10),game.at(7, 10), game.at(12, 11), game.at(13, 13), game.at(14, 13),
-    game.at(14, 14), game.at(13, 14), game.at(12, 14), game.at(14, 9), game.at(10, 13), game.at(9, 12)]
-    const civil1 = new Civil(position = game.at(3, 5), image = "civil2.png")
-    const civil = new Civil(position = game.at(5, 3), image = "civil.png")
-    const civil2 = new Civil(position = game.at(1, 14), image = "civil2.png")
-    const civil3 = new Civil(position = game.at(14, 1), image = "civil2.png")
-    const civil4 = new Civil(position = game.at(12, 3), image = "civil.png")
-    const civil5 = new Civil(position = game.at(14, 12), image = "civil.png")
+    const posicionDeMuros = [game.at(0, 1), game.at(0, 2), game.at(0, 3), game.at(0, 4),
+    game.at(0, 5), game.at(0, 6), game.at(0, 7), game.at(0, 8), game.at(0, 9), game.at(0, 10),
+    game.at(0, 11), game.at(0, 12), game.at(0, 13), game.at(0, 14), game.at(0, 15),
 
-    const flama0 = new Fuego(position = game.at(1, 4))
-    const flama1 = new Fuego(position = game.at(3, 3))
-    const flama2 = new Fuego(position = game.at(5, 4))
-    const flama3 = new Fuego(position = game.at(2, 3))
-    const flama4 = new Fuego(position = game.at(13, 12))
-    const flama5 = new Fuego(position = game.at(14, 11))
-    const flama6 = new Fuego(position = game.at(3, 14))
-    const flama7 = new Fuego(position = game.at(2, 13))
-    const flama8 = new Fuego(position = game.at(13, 2))
-    const flama9 = new Fuego(position = game.at(10, 3))
+    game.at(1, 0), game.at(1, 1), game.at(1, 2), game.at(1, 3), game.at(1, 4), game.at(1, 5),
+    game.at(1, 6), game.at(1, 15),
 
-    const salida = new Salida(position = game.at(1, 1)) // representa en que posicion esta la salida, sino no la reconoce
+    game.at(2, 0), game.at(2, 2), game.at(2, 3), game.at(2, 4), game.at(2, 5), game.at(2, 15),
+    game.at(3, 0), game.at(3, 2), game.at(3, 3), game.at(3, 4), game.at(3, 5), game.at(3, 15),
+    game.at(4, 0), game.at(4, 15),
+    game.at(5, 0), game.at(5, 10), game.at(5, 15),
+    game.at(6, 0), game.at(6, 9), game.at(6, 10), game.at(6, 15),
+    game.at(7, 0), game.at(7, 15),
+    game.at(8, 0), game.at(8, 15),
+    game.at(9, 0), game.at(9, 7), game.at(9, 15),
+    game.at(10, 0), game.at(10, 7), game.at(10, 9), game.at(10, 15),
+    game.at(11, 0), game.at(11, 8), game.at(11, 9), game.at(11, 15),
+    game.at(12, 0), game.at(12, 7), game.at(12, 12), game.at(12, 13), game.at(12, 15),
+    game.at(13, 0), game.at(13, 1), game.at(13, 2), game.at(13, 12), game.at(13, 13), game.at(13, 15),
+    game.at(14, 0), game.at(14, 1), game.at(14, 3), game.at(14, 7), game.at(14, 15),
+    
+    game.at(15, 0), game.at(15, 1), game.at(15, 2), game.at(15, 3), game.at(15, 4),
+    game.at(15, 5), game.at(15, 6), game.at(15, 7), game.at(15, 8), game.at(15, 9), 
+    game.at(15, 10), game.at(15, 11), game.at(15, 12), game.at(15, 13), game.at(15, 14), game.at(15, 15)]
+
+    const civil1 = new Civil(position = game.at(2, 1), image = "civil2.png")
+    const civil = new Civil(position = game.at(11, 1), image = "civil.png")
+    const civil2 = new Civil(position = game.at(11, 4), image = "civil2.png")
+    const civil3 = new Civil(position = game.at(11, 5), image = "civil2.png")
+    const civil4 = new Civil(position = game.at(14, 8), image = "civil.png")
+    const civil5 = new Civil(position = game.at(8, 11), image = "civil.png")
+
+    const flama0 = new Fuego(position = game.at(2, 11), daño = 40)
+    const flama1 = new Fuego(position = game.at(7, 11), daño = 40)
+    const flama2 = new Fuego(position = game.at(8, 12), daño = 40)
+    const flama3 = new Fuego(position = game.at(9, 13), daño = 40)
+    const flama4 = new Fuego(position = game.at(13, 8), daño = 40)
+    const flama5 = new Fuego(position = game.at(13, 7), daño = 40)
+    const flama6 = new Fuego(position = game.at(10, 5), daño = 40)
+    const flama7 = new Fuego(position = game.at(10, 4), daño = 40)
+    const flama8 = new Fuego(position = game.at(3, 1), daño = 40)
+    const flama9 = new Fuego(position = game.at(10, 1), daño = 40)
+
+    const salida = new Salida(position = game.at(1, 13)) // representa en que posicion esta la salida, sino no la reconoce
 
     method iniciar() {
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
         game.addVisual(fondoNivel_1)
     
-        bombero.prepararNivel(game.at(2,1) , 200, 0)
+        bombero.prepararNivel(game.at(2, 13) , 200, 0)
 
         game.addVisual(energiaBombero)
         game.addVisual(civil2)
@@ -215,6 +232,10 @@ object nivelFacil {
         keyboard.right().onPressDo({bombero.derecha()})
         keyboard.left().onPressDo({bombero.izquierda()})
         
+        keyboard.p().onPressDo({ 
+                console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
+            })
+
         game.onCollideDo(bombero, {
             objeto => objeto.interactuarCon(bombero)
             })
