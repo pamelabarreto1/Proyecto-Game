@@ -72,13 +72,14 @@ object menu {
             laMusicaSuena = true
         }
         game.addVisual(fondoMenu)
-        game.addVisual(textoMenu) 
+        game.addVisual(titulo) 
         game.addVisual(cursorMenu) 
         game.addVisual(textoFacil) 
         game.addVisual(textoDificil)
+        game.addVisual(textoControles)
         game.addVisual(trofeo)
         
-        cursorMenu.position(game.at(3,3)) 
+        cursorMenu.position(game.at(3,7)) 
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
@@ -94,31 +95,50 @@ object menu {
     method subir() {
         if (opcionSeleccionada == 2) {
             opcionSeleccionada = 1
-            cursorMenu.position(game.at(3,3)) 
+            cursorMenu.position(game.at(3,7)) 
+        } else if (opcionSeleccionada == 3) {
+            opcionSeleccionada = 2
+            cursorMenu.position(game.at(3, 5)) 
         }
     }
+    
 
     method bajar() {
         if (opcionSeleccionada == 1) {
             opcionSeleccionada = 2
-            cursorMenu.position(game.at(3,1)) 
+            cursorMenu.position(game.at(3,5)) 
+        } else if (opcionSeleccionada == 2) {
+            opcionSeleccionada = 3
+            cursorMenu.position(game.at(3, 3))
         }
     }
 
     method seleccionar() {
-        if (opcionSeleccionada == 1 and not pestañaLogros.estaEnLogros()) {
-            self.empezarJuegoFacil()
-        } else {
-            
-            if (nivelDificilDesbloqueado and not pestañaLogros.estaEnLogros()) {
-                self.empezarJuegoDificil()
-            } else {
-                if (not pestañaLogros.estaEnLogros()) {
+      
+        if (not pestañaLogros.estaEnLogros()) {
+            if (opcionSeleccionada == 1) {
+                self.empezarJuegoFacil()
+            } 
+            else if (opcionSeleccionada == 2) {
+                if (nivelDificilDesbloqueado) {
+                    self.empezarJuegoDificil()
+                } else {
                     game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
                 }
-                
+            } 
+            else if (opcionSeleccionada == 3) {
+                self.mostrarControles() 
             }
         }
+    }
+   
+    method mostrarControles() {
+        game.clear()
+        game.addVisual(fondoControles) 
+
+        keyboard.space().onPressDo({
+            self.volverAlMenu()
+        })
     }
 
     method empezarJuegoFacil() {
@@ -332,22 +352,24 @@ object nivelDificil {
 
 // class
 
+class Menu {
+    const property image
+    var property position
+
+}
+
+const titulo = new Menu(image = "TituloMenuEscalado.png", position = game.at(4, 10))
+const textoFacil = new Menu(image = "BotonFaciEscalado.png", position = game.at(4, 5))
+const textoDificil = new Menu(image = "BotonDifiEscalado.png", position = game.at(4, 3))
+const textoControles = new Menu(image = "controlesMenu.png", position = game.at(4, 1))
+//const botonSalir = new textoMenu(image = "BotonSalirEscalado.png", position = game.at(5, 0))
+
+
 object cursorMenu {
-    var property position = game.at(0, 0)
+    var property position = game.at(3, 7)
     method image() = "cursorEscalado.png" 
 }
-object textoFacil {
-    method image() = "BotonFaciEscalado.png"
-    var property position = game.at(4,1)
-}
-object textoDificil {
-    method image() = "BotonDifiEscalado.png"
-    var property position = game.at(4, -1)
-}
-object textoMenu{
-    method image() = "TituloMenuEscalado.png"
-    var property position = game.at(0, 3)
-}
+
 
 
 
