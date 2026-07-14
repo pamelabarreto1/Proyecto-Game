@@ -34,7 +34,7 @@ object minijuegoTiming {
         game.addVisual(barraTiming)
         game.addVisual(cursorTiming)
 
-        game.onTick(500, "movimientoDelCursor", {cursorTiming.mover()})
+        game.onTick(250, "movimientoDelCursor", {cursorTiming.mover()})
 
         keyboard.space().onPressDo({self.verificarSiSeApagaElfuego()})
 
@@ -43,7 +43,7 @@ object minijuegoTiming {
     method verificarSiSeApagaElfuego() {
         game.removeTickEvent("movimientoDelCursor")
 
-        if (cursorTiming.position().x() == 7) {
+        if (cursorTiming.position().x() == 5) {
             self.ganar()
         } else {
             self.perder()
