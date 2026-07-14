@@ -2,16 +2,18 @@
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Pamela Barreto
+- Matias Gomez
+- Ivan Araujo
+- Tomas Gonzalez
+
 
 ## Capturas
 
-(agregar)
+(agregar) //FALTA AGREGAR CAPS
 
 ## Reglas de Juego / Instrucciones
-
+INSTRUCCIONES EN CAP 
 ### Objetivo del juego
 
 El jugador controla a un bombero cuya mision es extinguir todos los focos de incendio y rescatar a todos los civiles que se encuentren en peligro dentro del escenario
@@ -43,4 +45,4 @@ La partida termina en derrota si el contador de movimientos se agota antes de cu
 
     - Curso/Facultad
     - Versión de wollok
-    - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+    - Una vez terminado, no tenemos problemas en que el repositorio sea público.
