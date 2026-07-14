@@ -122,9 +122,7 @@ object menu {
             else if (opcionSeleccionada == 2) {
                 if (nivelDificilDesbloqueado) {
                     self.empezarJuegoDificil()
-                } else {
-                    game.say(cursorMenu, "¡Superá el Nivel Fácil primero!")
-                }
+                } 
             } 
             else if (opcionSeleccionada == 3) {
                 self.mostrarControles() 
