@@ -105,7 +105,6 @@ object bombero {
         agua = agua - 1
         self.cansarse()
         game.removeVisual(fuego)
-        game.say(self, "Fuego apagado!")
         administradorDeNivel.cumplirObjetivo()
         logro.sumarIncendiosApagados()
     

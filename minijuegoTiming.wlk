@@ -3,14 +3,14 @@ import civiles_y_fuego.*
 
 object barraTiming {
     method position() = game.at(5, 8)
-    method image() = ""
+    method image() = "verde.jpg" //es provisional esta, hay que ponerle una imagen que quede bien, tipo una barra que tenga zona verde en el medio, amarilla a los lados y rojo en los extremos
 }
 
 object cursorTiming {
     var property position = game.at(5, 8)
     var direccion = 1
     
-    method image() = ""
+    method image() = "cursor.png"
 
     method mover() {
         // Mueve el cursor desde 5,8 hasta 9,8 y viceversa
@@ -58,9 +58,13 @@ object minijuegoTiming {
 
     method perder() {
         game.say(bombero, "Uff! No logre apagar el fuego!")
+        bombero.quemarse(fuegoObjetivo.daño())
     }
 
     method finalizar() {
+        game.removeVisual(barraTiming)
+        game.removeVisual(cursorTiming)
         
+        keyboard.space().onPressDo({})
     }
 }

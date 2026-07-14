@@ -1,4 +1,5 @@
 import escenarios.*
+import minijuegoTiming.*
 
 class Elemento {
     
@@ -26,14 +27,11 @@ class Fuego inherits Elemento{
 
     override method interactuarCon(bombero) {
         if (bombero.agua() > 0) {
-            bombero.apagar(self)
+            minijuegoTiming.iniciar(self)
         } 
         else {
             bombero.quemarse(daño)
             game.say(bombero, "Auch, no tengo agua y me quemé!")
-            if (bombero.energia() == 0) {
-                game.say(bombero, "Sin energia para seguir")
-            }
         }
     }
     override method esAtravesable() = true
