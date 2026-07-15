@@ -211,6 +211,8 @@ object nivelFacil {
 
     const salida = new Salida(position = game.at(1, 12)) 
 
+    const lago = new Lago(position = game.at(5,5))
+    
     method iniciar() {
         posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
         game.addVisual(fondoNivel_1)
@@ -297,7 +299,8 @@ object nivelDificil {
     const flama9 = new Fuego(position = game.at(14, 8), daño = 40)
 
     const salida = new Salida(position = game.at(4, 14))
-
+    const lago = new Lago(position = game.at(5,5))
+    
     method iniciar() {
         
         game.addVisual(fondoNivel_2)
@@ -348,7 +351,6 @@ object nivelDificil {
         }
 }
 
-// class
 
 class Menu {
     const property image
@@ -360,13 +362,9 @@ const titulo = new Menu(image = "TituloMenuEscalado.png", position = game.at(4, 
 const textoFacil = new Menu(image = "BotonFaciEscalado.png", position = game.at(4, 5))
 const textoDificil = new Menu(image = "BotonDifiEscalado.png", position = game.at(4, 3))
 const textoControles = new Menu(image = "controlesMenu.png", position = game.at(4, 1))
-//const botonSalir = new textoMenu(image = "BotonSalirEscalado.png", position = game.at(5, 0))
+const cursorMenu = new Menu (image = "cursorEscalado.png",position = game.at(3, 7 ))
 
 
-object cursorMenu {
-    var property position = game.at(3, 7)
-    method image() = "cursorEscalado.png" 
-}
 
 
 

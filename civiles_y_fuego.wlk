@@ -38,7 +38,7 @@ class Fuego inherits Elemento{
 }
 
 
-object lago inherits Elemento{
+class Lago inherits Elemento{
     const property position = game.at(5, 5)
     const property image = "lago.png" 
 
