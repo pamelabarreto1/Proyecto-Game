@@ -195,7 +195,6 @@ object nivelFacil {
     const civil = new Civil(position = game.at(11, 1), image = "civil.png")
     const civil2 = new Civil(position = game.at(11, 4), image = "civil2.png")
     const civil3 = new Civil(position = game.at(11, 5), image = "civil2.png")
-    const civil4 = new Civil(position = game.at(14, 8), image = "civil.png")
     const civil5 = new Civil(position = game.at(8, 11), image = "civil.png")
 
     const flama0 = new Fuego(position = game.at(2, 11), daño = 40)
@@ -206,8 +205,7 @@ object nivelFacil {
     const flama5 = new Fuego(position = game.at(13, 7), daño = 40)
     const flama6 = new Fuego(position = game.at(10, 5), daño = 40)
     const flama7 = new Fuego(position = game.at(10, 4), daño = 40)
-    const flama8 = new Fuego(position = game.at(3, 1), daño = 40)
-    const flama9 = new Fuego(position = game.at(10, 1), daño = 40)
+   
 
     const salida = new Salida(position = game.at(1, 12)) 
 
@@ -223,7 +221,6 @@ object nivelFacil {
         game.addVisual(cantidadDeAguaBombero)
         game.addVisual(civil2)
         game.addVisual(civil3)
-        game.addVisual(civil4)
         game.addVisual(civil5)
         game.addVisual(civil1)
         game.addVisual(civil)
@@ -236,8 +233,6 @@ object nivelFacil {
         game.addVisual(flama5)
         game.addVisual(flama6)
         game.addVisual(flama7)
-        game.addVisual(flama8)
-        game.addVisual(flama9)
         game.addVisual(bombero)
         game.addVisual(salida)
 
