@@ -30,6 +30,8 @@ object minijuegoTiming {
 
     method iniciar(fuego) {
         fuegoObjetivo = fuego
+
+        bombero.estaEnMinijuego(true)
         
         game.addVisual(barraTiming)
         game.addVisual(cursorTiming)
@@ -64,6 +66,8 @@ object minijuegoTiming {
     method finalizar() {
         game.removeVisual(barraTiming)
         game.removeVisual(cursorTiming)
+
+        bombero.estaEnMinijuego(false)
         
         keyboard.space().onPressDo({})
     }

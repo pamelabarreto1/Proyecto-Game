@@ -3,11 +3,19 @@ import civiles_y_fuego.*
 import logros.*
 
 object bombero {
-    var property position = game.at(1,0)
+    var  position = game.at(1,0)
     var  agua = 0
     var  energia = 100
     var property estaCargandoUnCivil = false 
+    var property estaEnMinijuego = false
 
+    method position() = position
+    method position(nuevaPosicion) {
+        if (!estaEnMinijuego) {
+            position = nuevaPosicion
+        }
+    }
+    
     method image() = if (estaCargandoUnCivil) "bomberoRescate.png" else "bomberoPersonaje.png"
 
     method energia() = energia
@@ -52,7 +60,7 @@ object bombero {
         const proximo = position.up(1)
 
         if (self.puedeIrA(proximo)){
-            position = proximo
+            self.position(proximo)
             self.cansarse()
         }
         
@@ -61,7 +69,7 @@ object bombero {
         const proximo = position.down(1)
 
         if (self.puedeIrA(proximo)){
-            position = proximo
+            self.position(proximo)
             self.cansarse()
         }
         
@@ -70,7 +78,7 @@ object bombero {
         const proximo = position.right(1)
 
         if (self.puedeIrA(proximo)){
-            position = proximo
+            self.position(proximo)
             self.cansarse()
         }
         
@@ -79,7 +87,7 @@ object bombero {
         const proximo = position.left(1)
 
         if (self.puedeIrA(proximo)){
-            position = proximo
+            self.position(proximo)
             self.cansarse()
         }
         
