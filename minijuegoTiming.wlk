@@ -3,17 +3,17 @@ import civiles_y_fuego.*
 
 object barraTiming {
     method position() = game.at(7, 15)
-    method image() = "barraTiming.png" //es provisional esta, hay que ponerle una imagen que quede bien, tipo una barra que tenga zona verde en el medio, amarilla a los lados y rojo en los extremos
+    method image() = "barraTiming.png" 
 }
 
 object cursorTiming {
     var property position = game.at(7, 14)
     var direccion = 1
     
-    method image() = "cursor.png"
+    method image() = "cursorTiming.png"
 
     method mover() {
-        // Mueve el cursor desde 5,8 hasta 9,8 y viceversa
+        
         if (position.x() >= 11) {
             direccion = -1
         } 

@@ -197,14 +197,14 @@ object nivelFacil {
     const civil3 = new Civil(position = game.at(11, 5), image = "civil2.png")
     const civil5 = new Civil(position = game.at(8, 11), image = "civil.png")
 
-    const flama0 = new Fuego(position = game.at(2, 11), daño = 40)
-    const flama1 = new Fuego(position = game.at(7, 11), daño = 40)
-    const flama2 = new Fuego(position = game.at(8, 12), daño = 40)
-    const flama3 = new Fuego(position = game.at(9, 13), daño = 40)
-    const flama4 = new Fuego(position = game.at(13, 8), daño = 40)
-    const flama5 = new Fuego(position = game.at(13, 7), daño = 40)
-    const flama6 = new Fuego(position = game.at(10, 5), daño = 40)
-    const flama7 = new Fuego(position = game.at(10, 4), daño = 40)
+    const flama0 = new Fuego(position = game.at(2, 11), daño = 10)
+    const flama1 = new Fuego(position = game.at(7, 11), daño = 10)
+    const flama2 = new Fuego(position = game.at(8, 12), daño = 10)
+    const flama3 = new Fuego(position = game.at(9, 13), daño = 10)
+    const flama4 = new Fuego(position = game.at(13, 8), daño = 10)
+    const flama5 = new Fuego(position = game.at(13, 7), daño = 10)
+    const flama6 = new Fuego(position = game.at(10, 5), daño = 10)
+    const flama7 = new Fuego(position = game.at(10, 4), daño = 10)
    
 
     const salida = new Salida(position = game.at(1, 12)) 
