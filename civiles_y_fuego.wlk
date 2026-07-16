@@ -1,5 +1,9 @@
 import escenarios.*
 import minijuegoTiming.*
+<<<<<<< HEAD
+=======
+import logros.*
+>>>>>>> 9e84434ed229cdf6debd416acc050f918b6862f8
 class Elemento {
     method interactuarCon(bombero)
     method esAtravesable()
@@ -8,13 +12,12 @@ class Civil inherits Elemento {
     var property position
     const property image
     var estaSiendoRescatado = false
-    var yaFueEntregado = false 
 
     override method interactuarCon(bombero) {
- 
         if (not estaSiendoRescatado and not bombero.estaCargandoUnCivil()) {
             estaSiendoRescatado = true
             bombero.rescatar(self) 
+<<<<<<< HEAD
             self.position(nivelFacil.salida().position())
         }
        
@@ -28,6 +31,8 @@ class Civil inherits Elemento {
             administradorDeNivel.cumplirObjetivo()
                        
             game.removeVisual(self) 
+=======
+>>>>>>> 9e84434ed229cdf6debd416acc050f918b6862f8
         }
     }
 
@@ -43,7 +48,8 @@ class Fuego inherits Elemento {
     override method interactuarCon(bombero) {
         if (not estaSiendoApagado) {
             if (bombero.agua() > 0) {
-                minijuegoTiming.iniciar(self)
+                
+                minijuegoTiming.iniciar(self, bombero) 
                 estaSiendoApagado = true 
             } 
             else {
@@ -53,6 +59,20 @@ class Fuego inherits Elemento {
         }
     }
     
+    method resolverApagado(fueExitoso, bombero) {
+        if (fueExitoso) {
+            const seApagoRealmente = bombero.apagar(self)
+            if (seApagoRealmente) {
+                administradorDeNivel.cumplirObjetivo()
+                estadisticasDelJuego.sumarIncendioApagado()
+            }
+        } else {
+            game.say(bombero, "¡Uff! No logré apagar el fuego.")
+            bombero.quemarse(self.daño())
+            estaSiendoApagado = false 
+        }
+    }
+
     override method esAtravesable() = true
 }
 
@@ -72,4 +92,27 @@ class MuroInvisible inherits Elemento {
 
     override method interactuarCon(bombero) {}
     override method esAtravesable() = false
+}
+
+class Salida {
+    var property position
+    const property image = "salida.png"
+    var procesandoEntrega = false 
+
+    method interactuarCon(unBombero) {
+        if (unBombero.estaCargandoUnCivil() and not procesandoEntrega) {
+            procesandoEntrega = true 
+            
+            unBombero.dejarCivilEnSalida() 
+            game.say(unBombero, "¡Un civil a salvo!")
+            
+            administradorDeNivel.cumplirObjetivo()
+            
+            estadisticasDelJuego.sumarRescate() 
+            
+            game.schedule(500, { procesandoEntrega = false }) 
+        }
+    }
+
+    method esAtravesable() = true
 }
