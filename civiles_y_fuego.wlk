@@ -1,14 +1,9 @@
 import escenarios.*
 import minijuegoTiming.*
-
-
 class Elemento {
-
     method interactuarCon(bombero)
     method esAtravesable()
 }
-
-
 class Civil inherits Elemento {
     var property position
     const property image
@@ -20,8 +15,6 @@ class Civil inherits Elemento {
         if (not estaSiendoRescatado and not bombero.estaCargandoUnCivil()) {
             estaSiendoRescatado = true
             bombero.rescatar(self) 
-            
-    
             self.position(nivelFacil.salida().position())
         }
        
@@ -33,8 +26,7 @@ class Civil inherits Elemento {
             game.say(bombero, "¡Un civil a salvo!")
       
             administradorDeNivel.cumplirObjetivo()
-            
-            
+                       
             game.removeVisual(self) 
         }
     }
