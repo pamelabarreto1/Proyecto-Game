@@ -51,7 +51,8 @@ class Fuego inherits Elemento {
     override method interactuarCon(bombero) {
         if (not estaSiendoApagado) {
             if (bombero.agua() > 0) {
-                minijuegoTiming.iniciar(self)
+                
+                minijuegoTiming.iniciar(self, bombero) 
                 estaSiendoApagado = true 
             } 
             else {
@@ -61,6 +62,19 @@ class Fuego inherits Elemento {
         }
     }
     
+    method resolverApagado(fueExitoso, bombero) {
+        if (fueExitoso) {
+            const seApagoRealmente = bombero.apagar(self)
+            if (seApagoRealmente) {
+                administradorDeNivel.cumplirObjetivo()
+            }
+        } else {
+            game.say(bombero, "¡Uff! No logré apagar el fuego.")
+            bombero.quemarse(self.daño())
+            estaSiendoApagado = false 
+        }
+    }
+
     override method esAtravesable() = true
 }
 

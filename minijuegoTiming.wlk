@@ -4,50 +4,57 @@ import escenarios.*
 
 
 class BarraTiming {
-
     const property position = game.at(7, 15)
+    
+    const property limiteIzquierdo = 7
+    const property limiteDerecho = 11
+    const property zonaExito = 9
     const property image = "barraTiming.png" 
 }
 
 class CursorTiming {
-    var property position = game.at(7, 14)
+    const barraBase 
+    var property position = game.at(0,0) 
     var direccion = 1
     
     const property image = "cursorTiming.png"
 
     method mover() {
-        if (position.x() >= 11) {
+        
+        if (position.x() >= barraBase.limiteDerecho()){
             direccion = -1
-        } 
-        if (position.x() <= 7) {
+        }
+        if (position.x() <= barraBase.limiteIzquierdo()) {
             direccion = 1
         }
         position = position.right(direccion)
     }
 
     method resetear() {
-        position = game.at(7, 14)
+        
+        position = game.at(barraBase.limiteIzquierdo(), barraBase.position().y() - 1)
         direccion = 1
     }
 
     method estaEnZonaDeExito() {
-        return position.x() == 9
+        return position.x() == barraBase.zonaExito()
     }
 }
+
 object minijuegoTiming {
     var fuegoObjetivo = null
+    var bomberoJugando = null 
     var juegoTerminado = false 
 
     const barra = new BarraTiming()
-    const cursor = new CursorTiming()
+    const cursor = new CursorTiming(barraBase = barra) 
 
-    method iniciar(fuego) {
+    method iniciar(fuego, bombero) {
         fuegoObjetivo = fuego
-
+        bomberoJugando = bombero
         juegoTerminado = false 
         cursor.resetear()
 
-        
         game.addVisual(barra)
         game.addVisual(cursor)
 
@@ -59,37 +66,18 @@ object minijuegoTiming {
         if (not juegoTerminado) {
             juegoTerminado = true
             game.removeTickEvent("movimientoDelCursor")
-            keyboard.space().onPressDo({})
-
-            if (cursor.estaEnZonaDeExito()) {
-                self.ganar()
-            } else {
-                self.perder()
-            }
+            
+    
+            const fueExitoso = cursor.estaEnZonaDeExito()
+            fuegoObjetivo.resolverApagado(fueExitoso, bomberoJugando)
+            
             self.finalizar()
         }
     }
 
-    method ganar() {
-        
-        const seApagoRealmente = bombero.apagar(fuegoObjetivo) 
-        if (seApagoRealmente) {
-            administradorDeNivel.cumplirObjetivo()
-        }
-    }
- 
-    method perder() {
-        game.say(bombero, "¡Uff! No logré apagar el fuego.")
-        bombero.quemarse(fuegoObjetivo.daño())
-        fuegoObjetivo.estaSiendoApagado(false)
-    }
-
     method finalizar() {
-
         game.removeVisual(barra)
         game.removeVisual(cursor)
-
-        keyboard.space().onPressDo({})
-
+        keyboard.space().onPressDo({}) 
     }
 }
