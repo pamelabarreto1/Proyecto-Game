@@ -7,7 +7,6 @@ import logros.*
 
 class AdministradorDeNivel {
     var property objetosPendientes = 0
-
     method limpiarYReiniciar() {
         game.clear()
         menu.iniciar()
@@ -212,21 +211,15 @@ const nivelDificil = new NivelDificil(
     ]
 )
 
-
 object menu {
     var property opcionSeleccionada = 1 
     var property nivelDificilDesbloqueado = false 
-    const musicaDeFondo = game.sound("(GAME)hitslab-game-gaming-video-game-music-459876.mp3")
-    var laMusicaSuena = false
+    const musica = musicaVolume
     
     method iniciar() {
         self.opcionSeleccionada(1)
-
-        musicaDeFondo.shouldLoop(true)
-        musicaDeFondo.volume(0.5)
-        if (!laMusicaSuena) {
-            musicaDeFondo.play()
-            laMusicaSuena = true
+        if (!musica.inicio()) {
+            musica.iniciar()
         }
         game.addVisual(fondoMenu)
         game.addVisual(titulo) 
@@ -235,7 +228,7 @@ object menu {
         game.addVisual(textoDificil)
         game.addVisual(textoControles)
         game.addVisual(trofeo)
-        
+        game.addVisual(musica)
         cursorMenu.position(game.at(3,7)) 
 
         keyboard.up().onPressDo { self.subir() }
@@ -244,6 +237,7 @@ object menu {
         keyboard.s().onPressDo { self.bajar() }
         keyboard.enter().onPressDo { self.seleccionar()} 
         keyboard.q().onPressDo { pestañaLogros.iniciar()} 
+        keyboard.o().onPressDo { musica.toggle()} 
     }
 
     method subir() {
@@ -309,11 +303,39 @@ class Menu {
     var property position
 }
 
-const titulo = new Menu(image = "TituloMenuEscalado.png", position = game.at(4, 10))
+const titulo = new Menu(image = "TituloMenuEscalado2.png", position = game.at(4, 10))
 const textoFacil = new Menu(image = "BotonFaciEscalado.png", position = game.at(4, 5))
 const textoDificil = new Menu(image = "BotonDifiEscalado.png", position = game.at(4, 3))
 const textoControles = new Menu(image = "controlesMenu.png", position = game.at(4, 1))
 const cursorMenu = new Menu(image = "cursorEscalado.png", position = game.at(3, 7))
+
+object musicaVolume {
+    const position = game.at(13, 1)
+    method position() = position
+    const musica = game.sound("(GAME)hitslab-game-gaming-video-game-music-459876.mp3")
+
+    var isPaused = true
+    var inicio = false
+    method isPaused() = isPaused
+    method inicio() = inicio
+    method image() = if (isPaused) "DesactivarSonido.png" else "ActivarSonido.png"
+    method iniciar() {
+        musica.play()
+        isPaused = false
+        inicio = true
+    }
+    method toggle() {
+        if (isPaused) {
+            console.println("PLAY")
+            musica.resume()
+            isPaused = false
+        } else {
+            console.println("PAUSE")
+            musica.pause()
+            isPaused = true
+        }
+    }
+}
 
 object pestañaLogros {
     var estaEnLogros = false

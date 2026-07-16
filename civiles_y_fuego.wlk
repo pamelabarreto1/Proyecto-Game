@@ -2,12 +2,9 @@ import escenarios.*
 import minijuegoTiming.*
 import logros.*
 class Elemento {
-
     method interactuarCon(bombero)
     method esAtravesable()
 }
-
-
 class Civil inherits Elemento {
     var property position
     const property image
