@@ -28,20 +28,11 @@ class AdministradorDeNivel {
         }
 
         if (objetosPendientes == 0) {
-
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
 
-            if (gestorDeNivel.nivelActual() == 1) { 
-                menu.nivelDificilDesbloqueado(true) 
-                game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
-                nivel1Completado.completar()
+            gestorDeNivel.nivelActual().completar()
                 
-                game.schedule(2500, { self.limpiarYReiniciar() })
-            } else if (gestorDeNivel.nivelActual() == 2) {
-                nivel2Completado.completar()
-                game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
-                game.schedule(2500, { self.limpiarYReiniciar() })
-            }
+            game.schedule(2500, { self.limpiarYReiniciar() })
         }
     }
 }
@@ -49,7 +40,7 @@ class AdministradorDeNivel {
 const administradorDeNivel = new AdministradorDeNivel(objetosPendientes = 13)
 
 object gestorDeNivel {
-    var property nivelActual = 0
+    var property nivelActual = null
 }
 
 class Nivel {
@@ -94,6 +85,13 @@ class Nivel {
         self.configurarColisiones()
     }
 
+    method completar() {
+        estadisticasDelJuego.completarNivel(self.numeroDeNivel())
+        self.efectoAlGanar()
+    }
+
+    method efectoAlGanar()
+
     method configurarTeclas() {
         keyboard.w().onPressDo({ bombero.subir() })
         keyboard.s().onPressDo({ bombero.bajar() })
@@ -117,10 +115,15 @@ class Nivel {
     }
 }
 class NivelFacil inherits Nivel {
-
+    override method efectoAlGanar() {
+        menu.nivelDificilDesbloqueado(true) 
+        game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
+    }
 }
 class NivelDificil inherits Nivel {
-
+    override method efectoAlGanar() {
+        game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
+    }
 }
 
 const nivelFacil = new NivelFacil(
@@ -318,12 +321,12 @@ object pestañaLogros {
     method cambiarEstaEnLogros(unbool) {
         estaEnLogros = unbool
     }
-    const logro1 = new LogroNiveles(position = game.at(2, 13), nivelSeleccionado = nivel1Completado)
-    const logro2 = new LogroNiveles(position = game.at(8, 13), nivelSeleccionado = nivel2Completado)
-    const logro3 = new LogroRescates(position = game.at(2, 10), metaRescates = 3)
-    const logro4 = new LogroRescates(position = game.at(8, 10), metaRescates = 20)
-    const logro5 = new LogroIncendios(position = game.at(2, 7), metaApagar = 5)
-    const logro6 = new LogroIncendios(position = game.at(8, 7), metaApagar = 15)
+    const logro1 = new LogroNivel(position = game.at(2, 13), nivelObjetivo = 1)
+    const logro2 = new LogroNivel(position = game.at(8, 13), nivelObjetivo = 2)
+    const logro3 = new LogroRescates(position = game.at(2, 10), meta = 3)
+    const logro4 = new LogroRescates(position = game.at(8, 10), meta = 20)
+    const logro5 = new LogroIncendios(position = game.at(2, 7), meta = 5)
+    const logro6 = new LogroIncendios(position = game.at(8, 7), meta = 15)
     
     method iniciar() {
         self.cambiarEstaEnLogros(true)

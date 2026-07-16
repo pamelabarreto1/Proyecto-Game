@@ -1,59 +1,66 @@
-object logro {
+object estadisticasDelJuego {
     var rescatados = 0
     var incendiosApagados = 0
+    const nivelesCompletados = [] 
+
     method rescatados() = rescatados
     method incendiosApagados() = incendiosApagados
+    
     method sumarRescate() {
         rescatados = rescatados + 1
     }
-    method sumarIncendiosApagados() {
+    
+    method sumarIncendioApagado() {
         incendiosApagados = incendiosApagados + 1
+    }
+
+    method completarNivel(numeroDeNivel) {
+        if (not nivelesCompletados.contains(numeroDeNivel)) {
+            nivelesCompletados.add(numeroDeNivel)
+        }
+    }
+
+    method nivelEstaCompleto(numeroDeNivel) {
+        return nivelesCompletados.contains(numeroDeNivel)
     }
 }
 
 class Logro {
     var property position
-    method estaCompleto()
-    method image() = if (self.estaCompleto()) "logroCompleto.png" else "logroIncompleto.png"
+    
+    method estaCompleto() 
+    
+    method image() {
+        return if (self.estaCompleto()) "logroCompleto.png" else "logroIncompleto.png"
+    }
 }
 
-class LogroNiveles inherits Logro {
-    const nivelSeleccionado
+class LogroNivel inherits Logro {
+    const nivelObjetivo 
+
     override method estaCompleto() {
-        return nivelSeleccionado.estaCompleto()
+        return estadisticasDelJuego.nivelEstaCompleto(nivelObjetivo)
     }
 }
 
-object nivel1Completado {
-    var estaCompletado = false
-    method completar() {
-        estaCompletado = true
-    }
-    method estaCompleto() = estaCompletado
-}
-object nivel2Completado {
-    var estaCompletado = false
-    method completar() {
-        estaCompletado = true
-    }
-    method estaCompleto() = estaCompletado
-}
 
 class LogroRescates inherits Logro {
-    const metaRescates
+    const meta
+
     override method estaCompleto() {
-        return metaRescates <= logro.rescatados()
+        return estadisticasDelJuego.rescatados() >= meta
     }
 }
 
 class LogroIncendios inherits Logro {
-    const metaApagar
+    const meta
+
     override method estaCompleto() {
-        return metaApagar <= logro.incendiosApagados()
+        return estadisticasDelJuego.incendiosApagados() >= meta
     }
 }
 
 object trofeo {
     var property position = game.at(1, 1)
-    method image() ="trofeoOro.png"
+    method image() = "trofeoOro.png"
 }
