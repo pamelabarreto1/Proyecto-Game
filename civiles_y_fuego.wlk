@@ -1,9 +1,6 @@
 import escenarios.*
 import minijuegoTiming.*
-<<<<<<< HEAD
-=======
 import logros.*
->>>>>>> 9e84434ed229cdf6debd416acc050f918b6862f8
 class Elemento {
     method interactuarCon(bombero)
     method esAtravesable()
@@ -17,22 +14,6 @@ class Civil inherits Elemento {
         if (not estaSiendoRescatado and not bombero.estaCargandoUnCivil()) {
             estaSiendoRescatado = true
             bombero.rescatar(self) 
-<<<<<<< HEAD
-            self.position(nivelFacil.salida().position())
-        }
-       
-        if (estaSiendoRescatado and not yaFueEntregado and bombero.position() == nivelFacil.salida().position()) {
-            yaFueEntregado = true 
-            estaSiendoRescatado = false
-            
-            bombero.dejarCivilEnSalida()
-            game.say(bombero, "¡Un civil a salvo!")
-      
-            administradorDeNivel.cumplirObjetivo()
-                       
-            game.removeVisual(self) 
-=======
->>>>>>> 9e84434ed229cdf6debd416acc050f918b6862f8
         }
     }
 
