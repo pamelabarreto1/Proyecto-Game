@@ -1,74 +1,95 @@
 import bombero.*
 import civiles_y_fuego.*
+import escenarios.*
 
-object barraTiming {
-    method position() = game.at(7, 15)
-    method image() = "barraTiming.png" 
+
+class BarraTiming {
+
+    const property position = game.at(7, 15)
+    const property image = "barraTiming.png" 
 }
 
-object cursorTiming {
+class CursorTiming {
     var property position = game.at(7, 14)
     var direccion = 1
     
-    method image() = "cursorTiming.png"
+    const property image = "cursorTiming.png"
 
     method mover() {
-        
         if (position.x() >= 11) {
             direccion = -1
         } 
         if (position.x() <= 7) {
             direccion = 1
         }
-
         position = position.right(direccion)
     }
-}
 
+    method resetear() {
+        position = game.at(7, 14)
+        direccion = 1
+    }
+
+    method estaEnZonaDeExito() {
+        return position.x() == 9
+    }
+}
 object minijuegoTiming {
     var fuegoObjetivo = null
+    var juegoTerminado = false 
+
+    const barra = new BarraTiming()
+    const cursor = new CursorTiming()
 
     method iniciar(fuego) {
         fuegoObjetivo = fuego
 
-        bombero.estaEnMinijuego(true)
+        juegoTerminado = false 
+        cursor.resetear()
+
         
-        game.addVisual(barraTiming)
-        game.addVisual(cursorTiming)
+        game.addVisual(barra)
+        game.addVisual(cursor)
 
-        game.onTick(200, "movimientoDelCursor", {cursorTiming.mover()})
-
-        keyboard.space().onPressDo({self.verificarSiSeApagaElfuego()})
-
+        game.onTick(200, "movimientoDelCursor", { cursor.mover() })
+        keyboard.space().onPressDo({ self.verificarSiSeApagaElFuego() })
     }
 
-    method verificarSiSeApagaElfuego() {
-        game.removeTickEvent("movimientoDelCursor")
+    method verificarSiSeApagaElFuego() {
+        if (not juegoTerminado) {
+            juegoTerminado = true
+            game.removeTickEvent("movimientoDelCursor")
+            keyboard.space().onPressDo({})
 
-        if (cursorTiming.position().x() == 9) {
-            self.ganar()
-        } else {
-            self.perder()
+            if (cursor.estaEnZonaDeExito()) {
+                self.ganar()
+            } else {
+                self.perder()
+            }
+            self.finalizar()
         }
-        self.finalizar()
     }
 
     method ganar() {
-        game.say(bombero, "Bien! Fuego apagado!")
-        bombero.apagar(fuegoObjetivo)
+        
+        const seApagoRealmente = bombero.apagar(fuegoObjetivo) 
+        if (seApagoRealmente) {
+            administradorDeNivel.cumplirObjetivo()
+        }
     }
-
+ 
     method perder() {
-        game.say(bombero, "Uff! No logre apagar el fuego!")
+        game.say(bombero, "¡Uff! No logré apagar el fuego.")
         bombero.quemarse(fuegoObjetivo.daño())
+        fuegoObjetivo.estaSiendoApagado(false)
     }
 
     method finalizar() {
-        game.removeVisual(barraTiming)
-        game.removeVisual(cursorTiming)
 
-        bombero.estaEnMinijuego(false)
-        
+        game.removeVisual(barra)
+        game.removeVisual(cursor)
+
         keyboard.space().onPressDo({})
+
     }
 }
