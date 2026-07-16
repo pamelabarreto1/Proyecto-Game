@@ -77,7 +77,7 @@ class MuroInvisible inherits Elemento {
 
 class Salida {
     var property position
-    const property image = "salida.png"
+    const property image = "camionDeBombero.png"
     var procesandoEntrega = false 
 
     method interactuarCon(unBombero) {
