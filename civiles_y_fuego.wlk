@@ -1,7 +1,6 @@
 import escenarios.*
 import minijuegoTiming.*
-
-
+import logros.*
 class Elemento {
 
     method interactuarCon(bombero)
@@ -67,6 +66,7 @@ class Fuego inherits Elemento {
             const seApagoRealmente = bombero.apagar(self)
             if (seApagoRealmente) {
                 administradorDeNivel.cumplirObjetivo()
+                estadisticasDelJuego.sumarIncendioApagado()
             }
         } else {
             game.say(bombero, "¡Uff! No logré apagar el fuego.")
