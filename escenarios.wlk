@@ -129,17 +129,17 @@ class NivelDificil inherits Nivel {
 const nivelFacil = new NivelFacil(
     numeroDeNivel = 1,
     fondoNivel = fondoNivel_1,
-    posicionBombero = game.at(2, 12),
-    energiaBomberoInicial = 300,
+    posicionBombero = game.at(1, 13),
+    energiaBomberoInicial = 250,
     aguaBomberoInicial = 0,
     lago = new Lago(position = game.at(5, 5)),
-    salida = new Salida(position = game.at(1, 13)),
+    salida = new Salida(position = game.at(1, 12)),
     civiles = [
-        new Civil(position = game.at(2, 1), image = "civil2.png"),
-        new Civil(position = game.at(11, 1), image = "civil.png"),
-        new Civil(position = game.at(11, 4), image = "civil2.png"),
-        new Civil(position = game.at(11, 5), image = "civil2.png"),
-        new Civil(position = game.at(8, 11), image = "civil.png")
+        new Civil(position = game.at(2, 1), image = "civilPidiendoAyuda.png"),
+        new Civil(position = game.at(11, 1), image = "civilArrodillado.png"),
+        new Civil(position = game.at(11, 4), image = "civilArrodillado.png"),
+        new Civil(position = game.at(11, 5), image = "civilAbrazandoRodilla.png"),
+        new Civil(position = game.at(8, 11), image = "civilAsustado.png")
     ],
     fuegos = [
         new Fuego(position = game.at(2, 11), daño = 10),
@@ -180,11 +180,11 @@ const nivelDificil = new NivelDificil(
     lago = new Lago(position = game.at(5, 5)),
     salida = new Salida(position = game.at(4, 14)),
     civiles = [
-        new Civil(position = game.at(1, 12), image = "civil2.png"),
-        new Civil(position = game.at(1, 4), image = "civil.png"),
-        new Civil(position = game.at(8, 1), image = "civil.png"),
-        new Civil(position = game.at(9, 14), image = "civil2.png"),
-        new Civil(position = game.at(14, 7), image = "civil.png")
+        new Civil(position = game.at(1, 12), image = "civilAbrazandoRodilla.png"),
+        new Civil(position = game.at(1, 4), image = "civilPidiendoAyuda.png"),
+        new Civil(position = game.at(8, 1), image = "civilAsustado.png"),
+        new Civil(position = game.at(9, 14), image = "civilArrodillado.png"),
+        new Civil(position = game.at(14, 7), image = "civilArrodillado.png")
     ],
     fuegos = [
         new Fuego(position = game.at(1, 13), daño = 40),
