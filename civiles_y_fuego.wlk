@@ -12,29 +12,11 @@ class Civil inherits Elemento {
     var property position
     const property image
     var estaSiendoRescatado = false
-    var yaFueEntregado = false 
 
     override method interactuarCon(bombero) {
- 
         if (not estaSiendoRescatado and not bombero.estaCargandoUnCivil()) {
             estaSiendoRescatado = true
             bombero.rescatar(self) 
-            
-    
-            self.position(nivelFacil.salida().position())
-        }
-       
-        if (estaSiendoRescatado and not yaFueEntregado and bombero.position() == nivelFacil.salida().position()) {
-            yaFueEntregado = true 
-            estaSiendoRescatado = false
-            
-            bombero.dejarCivilEnSalida()
-            game.say(bombero, "¡Un civil a salvo!")
-      
-            administradorDeNivel.cumplirObjetivo()
-            
-            
-            game.removeVisual(self) 
         }
     }
 
@@ -94,4 +76,27 @@ class MuroInvisible inherits Elemento {
 
     override method interactuarCon(bombero) {}
     override method esAtravesable() = false
+}
+
+class Salida {
+    var property position
+    const property image = "salida.png"
+    var procesandoEntrega = false 
+
+    method interactuarCon(unBombero) {
+        if (unBombero.estaCargandoUnCivil() and not procesandoEntrega) {
+            procesandoEntrega = true 
+            
+            unBombero.dejarCivilEnSalida() 
+            game.say(unBombero, "¡Un civil a salvo!")
+            
+            administradorDeNivel.cumplirObjetivo()
+            
+            estadisticasDelJuego.sumarRescate() 
+            
+            game.schedule(500, { procesandoEntrega = false }) 
+        }
+    }
+
+    method esAtravesable() = true
 }

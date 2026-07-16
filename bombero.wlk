@@ -115,23 +115,3 @@ object cantidadDeAguaBombero {
     method interactuarCon(unBombero) {}
     method esAtravesable() = true
 }
-class Salida {
-    var property position
-    const property image = "salida.png"
-    var procesandoEntrega = false 
-
-    method interactuarCon(unBombero) {
-        if (unBombero.estaCargandoUnCivil() and not procesandoEntrega) {
-            procesandoEntrega = true 
-            
-            unBombero.dejarCivilEnSalida() 
-            game.say(unBombero, "¡Un civil a salvo!")
-            administradorDeNivel.cumplirObjetivo()
-           
-            
-            game.schedule(500, { procesandoEntrega = false }) 
-        }
-    }
-
-    method esAtravesable() = true
-}
