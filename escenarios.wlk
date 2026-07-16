@@ -4,8 +4,9 @@ import civiles_y_fuego.*
 import fondos.*
 import logros.*
 
+
 class AdministradorDeNivel {
-    var property objetosPendientes 
+    var property objetosPendientes = 0
 
     method limpiarYReiniciar() {
         game.clear()
@@ -13,47 +14,201 @@ class AdministradorDeNivel {
     }
 
     method perderJuego() {
-        game.clear() //limpiamos todo el escenario
-        game.addVisual(fondoGameOver) // mostramos el game over por derrota
+        game.clear() 
+        game.addVisual(fondoGameOver) 
         
-   
-        keyboard.space().onPressDo({ //con la tecla space volvemos al menu
+        keyboard.space().onPressDo({ 
             self.limpiarYReiniciar()
         })
     }
+
     method cumplirObjetivo() {
-        objetosPendientes = objetosPendientes - 1
+        if (objetosPendientes > 0) {
+            objetosPendientes = objetosPendientes - 1
+        }
 
         if (objetosPendientes == 0) {
+
             game.say(bombero, "¡Misión Cumplida! Ganaste.")
 
             if (gestorDeNivel.nivelActual() == 1) { 
-                menu.nivelDificilDesbloqueado(true) // se desbloquea el nivel dificil
-
-                // -- podria agregar bombero.energia(0) para que se quede quieto el personaje.
+                menu.nivelDificilDesbloqueado(true) 
                 game.say(bombero, "¡Nivel 2 Desbloqueado! Volviendo al menú...")
                 nivel1Completado.completar()
                 
-                game.schedule(2500, {
-                    self.limpiarYReiniciar()
-                })
-            }
-            if (gestorDeNivel.nivelActual() == 2) {
-                game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
+                game.schedule(2500, { self.limpiarYReiniciar() })
+            } else if (gestorDeNivel.nivelActual() == 2) {
                 nivel2Completado.completar()
-                game.schedule(2500, {
-                    self.limpiarYReiniciar()
-                })
+                game.say(bombero, "¡Ganaste el juego! Volviendo al menú...")
+                game.schedule(2500, { self.limpiarYReiniciar() })
             }
         }
     }
 }
 
-const administradorDeNivel = new AdministradorDeNivel (objetosPendientes = 6)
+const administradorDeNivel = new AdministradorDeNivel(objetosPendientes = 13)
 
 object gestorDeNivel {
     var property nivelActual = 0
 }
+
+class Nivel {
+
+    const property numeroDeNivel
+    const property fondoNivel
+    const property posicionBombero
+    const property energiaBomberoInicial
+    const property aguaBomberoInicial
+    const property lago
+    const property salida
+    const property civiles
+    const property fuegos
+    const property posicionDeMuros
+
+
+    method elementosInteractivos() {
+        return civiles + fuegos + [lago, salida]
+    }
+    method cantidadDeObjetivos() {
+        return civiles.size() + fuegos.size()
+    }
+
+
+    method iniciar() {
+        gestorDeNivel.nivelActual(self.numeroDeNivel())
+        console.println(self.cantidadDeObjetivos())
+        administradorDeNivel.objetosPendientes(self.cantidadDeObjetivos())
+
+        game.addVisual(self.fondoNivel())
+        self.posicionDeMuros().forEach({ p => game.addVisual(new MuroInvisible(position = p)) })
+
+        bombero.prepararNivel(self.posicionBombero(), self.energiaBomberoInicial(), self.aguaBomberoInicial())
+
+        game.addVisual(energiaBombero)
+        game.addVisual(cantidadDeAguaBombero)
+
+        self.elementosInteractivos().forEach({ elemento => game.addVisual(elemento) })
+        game.addVisual(bombero)
+
+        self.configurarTeclas()
+        self.configurarColisiones()
+    }
+
+    method configurarTeclas() {
+        keyboard.w().onPressDo({ bombero.subir() })
+        keyboard.s().onPressDo({ bombero.bajar() })
+        keyboard.d().onPressDo({ bombero.derecha() })
+        keyboard.a().onPressDo({ bombero.izquierda() })
+
+        keyboard.up().onPressDo({ bombero.subir() })
+        keyboard.down().onPressDo({ bombero.bajar() })
+        keyboard.right().onPressDo({ bombero.derecha() })
+        keyboard.left().onPressDo({ bombero.izquierda() })
+
+        keyboard.backspace().onPressDo({ menu.volverAlMenu() })
+
+        keyboard.p().onPressDo({ 
+            console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
+        })
+    }
+
+    method configurarColisiones() {
+        game.onCollideDo(bombero, { objeto => objeto.interactuarCon(bombero) })
+    }
+}
+class NivelFacil inherits Nivel {
+
+}
+class NivelDificil inherits Nivel {
+
+}
+
+const nivelFacil = new NivelFacil(
+    numeroDeNivel = 1,
+    fondoNivel = fondoNivel_1,
+    posicionBombero = game.at(2, 12),
+    energiaBomberoInicial = 300,
+    aguaBomberoInicial = 0,
+    lago = new Lago(position = game.at(5, 5)),
+    salida = new Salida(position = game.at(1, 13)),
+    civiles = [
+        new Civil(position = game.at(2, 1), image = "civil2.png"),
+        new Civil(position = game.at(11, 1), image = "civil.png"),
+        new Civil(position = game.at(11, 4), image = "civil2.png"),
+        new Civil(position = game.at(11, 5), image = "civil2.png"),
+        new Civil(position = game.at(8, 11), image = "civil.png")
+    ],
+    fuegos = [
+        new Fuego(position = game.at(2, 11), daño = 10),
+        new Fuego(position = game.at(7, 11), daño = 10),
+        new Fuego(position = game.at(8, 12), daño = 10),
+        new Fuego(position = game.at(9, 13), daño = 10),
+        new Fuego(position = game.at(13, 8), daño = 10),
+        new Fuego(position = game.at(13, 7), daño = 10),
+        new Fuego(position = game.at(10, 5), daño = 10),
+        new Fuego(position = game.at(10, 4), daño = 10)
+    ],
+    posicionDeMuros = [
+        game.at(0, 1), game.at(0, 2), game.at(0, 3), game.at(0, 4), game.at(0, 5), game.at(0, 6),
+        game.at(0, 7), game.at(0, 8), game.at(0, 9), game.at(0, 10), game.at(0, 11), game.at(0, 12),
+        game.at(0, 13), game.at(0, 14), game.at(0, 15), game.at(1, 0), game.at(1, 1), game.at(1, 2),
+        game.at(1, 3), game.at(1, 4), game.at(1, 5), game.at(1, 6), game.at(1, 15), game.at(2, 0),
+        game.at(2, 2), game.at(2, 3), game.at(2, 4), game.at(2, 5), game.at(2, 15), game.at(3, 0),
+        game.at(3, 2), game.at(3, 3), game.at(3, 4), game.at(3, 5), game.at(3, 15), game.at(4, 0),
+        game.at(4, 15), game.at(5, 0), game.at(5, 10), game.at(5, 15), game.at(6, 0), game.at(6, 9),
+        game.at(6, 10), game.at(6, 15), game.at(7, 0), game.at(7, 15), game.at(8, 0), game.at(8, 15),
+        game.at(9, 0), game.at(9, 7), game.at(9, 15), game.at(10, 0), game.at(10, 7), game.at(10, 9),
+        game.at(10, 15), game.at(11, 0), game.at(11, 8), game.at(11, 9), game.at(11, 15), game.at(12, 0),
+        game.at(12, 7), game.at(12, 12), game.at(12, 13), game.at(12, 15), game.at(13, 0), game.at(13, 1),
+        game.at(13, 2), game.at(13, 12), game.at(13, 13), game.at(13, 15), game.at(14, 0), game.at(14, 1),
+        game.at(14, 3), game.at(14, 7), game.at(14, 15), game.at(15, 0), game.at(15, 1), game.at(15, 2),
+        game.at(15, 3), game.at(15, 4), game.at(15, 5), game.at(15, 6), game.at(15, 7), game.at(15, 8),
+        game.at(15, 9), game.at(15, 10), game.at(15, 11), game.at(15, 12), game.at(15, 13), game.at(15, 14),
+        game.at(15, 15)
+    ]
+)
+
+const nivelDificil = new NivelDificil(
+    numeroDeNivel = 2,
+    fondoNivel = fondoNivel_2,
+    posicionBombero = game.at(3, 14),
+    energiaBomberoInicial = 160,
+    aguaBomberoInicial = 0,
+    lago = new Lago(position = game.at(5, 5)),
+    salida = new Salida(position = game.at(4, 14)),
+    civiles = [
+        new Civil(position = game.at(1, 12), image = "civil2.png"),
+        new Civil(position = game.at(1, 4), image = "civil.png"),
+        new Civil(position = game.at(8, 1), image = "civil.png"),
+        new Civil(position = game.at(9, 14), image = "civil2.png"),
+        new Civil(position = game.at(14, 7), image = "civil.png")
+    ],
+    fuegos = [
+        new Fuego(position = game.at(1, 13), daño = 40),
+        new Fuego(position = game.at(2, 4), daño = 40),
+        new Fuego(position = game.at(2, 11), daño = 40),
+        new Fuego(position = game.at(8, 2), daño = 40),
+        new Fuego(position = game.at(8, 14), daño = 40),
+        new Fuego(position = game.at(9, 13), daño = 40),
+        new Fuego(position = game.at(13, 7), daño = 40),
+        new Fuego(position = game.at(13, 8), daño = 40),
+        new Fuego(position = game.at(14, 8), daño = 40)
+    ],
+    posicionDeMuros = [
+        game.at(0,3), game.at(0,4), game.at(0,8), game.at(0,11), game.at(0,12), game.at(0,13),
+        game.at(1,1), game.at(1,2), game.at(1,5), game.at(1,7), game.at(1,9), game.at(1,10), game.at(1,14), 
+        game.at(2,0), game.at(2,5), game.at(2,7), game.at(2,14), game.at(3,0), game.at(3,5), game.at(3,6),
+        game.at(3,7), game.at(3,10), game.at(3,15), game.at(4,0), game.at(4,9), game.at(4,11), game.at(4,15), 
+        game.at(5,0), game.at(5,9), game.at(5,10), game.at(5,15), game.at(6,0), game.at(6,14), game.at(6,15), 
+        game.at(7,0), game.at(7,9), game.at(7,10), game.at(7,14), game.at(7,15), game.at(8,0), game.at(8,9),
+        game.at(8,10), game.at(8,15), game.at(9,0), game.at(9,6), game.at(9,7), game.at(9,12), game.at(9,15),
+        game.at(10,0), game.at(10,6), game.at(10,7), game.at(10,9), game.at(10,10), game.at(10,11), game.at(10,13),
+        game.at(10,14), game.at(11,0), game.at(11,9), game.at(12,1), game.at(12,2), game.at(12,9), 
+        game.at(13,3), game.at(13,9), game.at(13,9), game.at(14,3), game.at(14,9), game.at(15,4), game.at(15,5),
+        game.at(15,6), game.at(15,7), game.at(15,8)
+    ]
+)
+
 
 object menu {
     var property opcionSeleccionada = 1 
@@ -62,7 +217,6 @@ object menu {
     var laMusicaSuena = false
     
     method iniciar() {
-        
         self.opcionSeleccionada(1)
 
         musicaDeFondo.shouldLoop(true)
@@ -83,12 +237,9 @@ object menu {
 
         keyboard.up().onPressDo { self.subir() }
         keyboard.down().onPressDo { self.bajar() }
-
         keyboard.w().onPressDo { self.subir() }
         keyboard.s().onPressDo { self.bajar() }
-
         keyboard.enter().onPressDo { self.seleccionar()} 
-
         keyboard.q().onPressDo { pestañaLogros.iniciar()} 
     }
 
@@ -102,7 +253,6 @@ object menu {
         }
     }
     
-
     method bajar() {
         if (opcionSeleccionada == 1) {
             opcionSeleccionada = 2
@@ -114,15 +264,12 @@ object menu {
     }
 
     method seleccionar() {
-      
         if (not pestañaLogros.estaEnLogros()) {
             if (opcionSeleccionada == 1) {
-                self.empezarJuegoFacil()
+                self.empezarNivel(nivelFacil)
             } 
-            else if (opcionSeleccionada == 2) {
-                if (nivelDificilDesbloqueado) {
-                    self.empezarJuegoDificil()
-                } 
+            else if (opcionSeleccionada == 2 and nivelDificilDesbloqueado) {
+                self.empezarNivel(nivelDificil)
             } 
             else if (opcionSeleccionada == 3) {
                 self.mostrarControles() 
@@ -134,24 +281,14 @@ object menu {
         game.clear()
         game.addVisual(fondoControles) 
 
-        keyboard.space().onPressDo({
-            self.volverAlMenu()
-        })
+        keyboard.space().onPressDo({ self.volverAlMenu() })
     }
 
-    method empezarJuegoFacil() {
+    method empezarNivel(nivel) {
         game.clear()
-        gestorDeNivel.nivelActual(1)
-        administradorDeNivel.objetosPendientes(16)
-        nivelFacil.iniciar()
+        nivel.iniciar()
     }
 
-    method empezarJuegoDificil() {
-        game.clear()
-        gestorDeNivel.nivelActual(2)
-        administradorDeNivel.objetosPendientes(14)
-        nivelDificil.iniciar()
-    }
     method volverAlMenu() {
         game.clear()
         self.iniciar()
@@ -164,205 +301,16 @@ object menu {
 }
 
 
-object nivelFacil {
-
-    const posicionDeMuros = [game.at(0, 1), game.at(0, 2), game.at(0, 3), game.at(0, 4),
-    game.at(0, 5), game.at(0, 6), game.at(0, 7), game.at(0, 8), game.at(0, 9), game.at(0, 10),
-    game.at(0, 11), game.at(0, 12), game.at(0, 13), game.at(0, 14), game.at(0, 15),
-
-    game.at(1, 0), game.at(1, 1), game.at(1, 2), game.at(1, 3), game.at(1, 4), game.at(1, 5),
-    game.at(1, 6), game.at(1, 15),
-
-    game.at(2, 0), game.at(2, 2), game.at(2, 3), game.at(2, 4), game.at(2, 5), game.at(2, 15),
-    game.at(3, 0), game.at(3, 2), game.at(3, 3), game.at(3, 4), game.at(3, 5), game.at(3, 15),
-    game.at(4, 0), game.at(4, 15),
-    game.at(5, 0), game.at(5, 10), game.at(5, 15),
-    game.at(6, 0), game.at(6, 9), game.at(6, 10), game.at(6, 15),
-    game.at(7, 0), game.at(7, 15),
-    game.at(8, 0), game.at(8, 15),
-    game.at(9, 0), game.at(9, 7), game.at(9, 15),
-    game.at(10, 0), game.at(10, 7), game.at(10, 9), game.at(10, 15),
-    game.at(11, 0), game.at(11, 8), game.at(11, 9), game.at(11, 15),
-    game.at(12, 0), game.at(12, 7), game.at(12, 12), game.at(12, 13), game.at(12, 15),
-    game.at(13, 0), game.at(13, 1), game.at(13, 2), game.at(13, 12), game.at(13, 13), game.at(13, 15),
-    game.at(14, 0), game.at(14, 1), game.at(14, 3), game.at(14, 7), game.at(14, 15),
-    
-    game.at(15, 0), game.at(15, 1), game.at(15, 2), game.at(15, 3), game.at(15, 4),
-    game.at(15, 5), game.at(15, 6), game.at(15, 7), game.at(15, 8), game.at(15, 9), 
-    game.at(15, 10), game.at(15, 11), game.at(15, 12), game.at(15, 13), game.at(15, 14), game.at(15, 15)]
-
-    const civil1 = new Civil(position = game.at(2, 1), image = "civil2.png")
-    const civil = new Civil(position = game.at(11, 1), image = "civil.png")
-    const civil2 = new Civil(position = game.at(11, 4), image = "civil2.png")
-    const civil3 = new Civil(position = game.at(11, 5), image = "civil2.png")
-    const civil5 = new Civil(position = game.at(8, 11), image = "civil.png")
-
-    const flama0 = new Fuego(position = game.at(2, 11), daño = 10)
-    const flama1 = new Fuego(position = game.at(7, 11), daño = 10)
-    const flama2 = new Fuego(position = game.at(8, 12), daño = 10)
-    const flama3 = new Fuego(position = game.at(9, 13), daño = 10)
-    const flama4 = new Fuego(position = game.at(13, 8), daño = 10)
-    const flama5 = new Fuego(position = game.at(13, 7), daño = 10)
-    const flama6 = new Fuego(position = game.at(10, 5), daño = 10)
-    const flama7 = new Fuego(position = game.at(10, 4), daño = 10)
-   
-
-    const salida = new Salida(position = game.at(1, 12)) 
-
-    const lago = new Lago(position = game.at(5,5))
-    
-    method iniciar() {
-        posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
-        game.addVisual(fondoNivel_1)
-    
-        bombero.prepararNivel(game.at(2, 12) , 300, 0)
-
-        game.addVisual(energiaBombero)
-        game.addVisual(cantidadDeAguaBombero)
-        game.addVisual(civil2)
-        game.addVisual(civil3)
-        game.addVisual(civil5)
-        game.addVisual(civil1)
-        game.addVisual(civil)
-        game.addVisual(lago)
-        game.addVisual(flama0)
-        game.addVisual(flama2)
-        game.addVisual(flama1)
-        game.addVisual(flama3)
-        game.addVisual(flama4)
-        game.addVisual(flama5)
-        game.addVisual(flama6)
-        game.addVisual(flama7)
-        game.addVisual(bombero)
-        game.addVisual(salida)
-
-        keyboard.w().onPressDo({bombero.subir()})
-        keyboard.s().onPressDo({bombero.bajar()})
-        keyboard.d().onPressDo({bombero.derecha()})
-        keyboard.a().onPressDo({bombero.izquierda()})
-
-        keyboard.backspace().onPressDo({menu.volverAlMenu()})
-
-        keyboard.up().onPressDo({bombero.subir()})
-        keyboard.down().onPressDo({bombero.bajar()})
-        keyboard.right().onPressDo({bombero.derecha()})
-        keyboard.left().onPressDo({bombero.izquierda()})
-        
-        keyboard.p().onPressDo({ 
-                console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
-            })
-
-        game.onCollideDo(bombero, {
-            objeto => objeto.interactuarCon(bombero)
-            })
-        }
-    }
-
-object nivelDificil {
-    
-    const posicionDeMuros = [game.at(0,3), game.at(0,4), game.at(0,8), game.at(0,11), game.at(0,12), game.at(0,13),
-                            game.at(1,1), game.at(1,2), game.at(1,5), game.at(1,7), game.at(1,9), game.at(1,10), game.at(1,14), 
-                            game.at(2,0), game.at(2,5), game.at(2,7), game.at(2,14), 
-                            game.at(3,0), game.at(3,5), game.at(3,6), game.at(3,7), game.at(3,10), game.at(3,15),
-                            game.at(4,0), game.at(4,9), game.at(4,11), game.at(4,15), 
-                            game.at(5,0), game.at(5,9), game.at(5,10), game.at(5,15),
-                            game.at(6,0), game.at(6,14), game.at(6,15), 
-                            game.at(7,0), game.at(7,9), game.at(7,10), game.at(7,14), game.at(7,15),
-                            game.at(8,0), game.at(8,9), game.at(8,10), game.at(8,15), 
-                            game.at(9,0), game.at(9,6), game.at(9,7), game.at(9,12), game.at(9,15),
-                            game.at(10,0), game.at(10,6), game.at(10,7), game.at(10,9), game.at(10,10), game.at(10,11), game.at(10,13), game.at(10,14),
-                            game.at(11,0), game.at(11,9), 
-                            game.at(12,1), game.at(12,2), game.at(12,9), 
-                            game.at(13,3), game.at(13,9),
-                            game.at(14,3), game.at(14,9),
-                            game.at(15,4), game.at(15,5), game.at(15,6), game.at(15,7), game.at(15,8)]
-
-    const civil1 = new Civil(position = game.at(1, 12), image = "civil2.png")
-    const civil2 = new Civil(position = game.at(1, 4), image = "civil.png")
-    const civil3 = new Civil(position = game.at(8, 1), image = "civil.png")
-    const civil4 = new Civil(position = game.at(9, 14), image = "civil2.png")
-    const civil5 = new Civil(position = game.at(14, 7), image = "civil.png")
-
-    const flama1 = new Fuego(position = game.at(1, 13), daño = 40)
-    const flama2 = new Fuego(position = game.at(2, 4), daño = 40)
-    const flama3 = new Fuego(position = game.at(2, 11), daño = 40)
-    const flama4 = new Fuego(position = game.at(8, 2), daño = 40)
-    const flama5 = new Fuego(position = game.at(8, 14), daño = 40)
-    const flama6 = new Fuego(position = game.at(9, 13), daño = 40)
-    const flama7 = new Fuego(position = game.at(13, 7), daño = 40)
-    const flama8 = new Fuego(position = game.at(13, 8), daño = 40)
-    const flama9 = new Fuego(position = game.at(14, 8), daño = 40)
-
-    const salida = new Salida(position = game.at(4, 14))
-    const lago = new Lago(position = game.at(5,5))
-    
-    method iniciar() {
-        
-        game.addVisual(fondoNivel_2)
-
-        posicionDeMuros.forEach({p => game.addVisual(new MuroInvisible(position = p))})
-
-        bombero.prepararNivel(game.at(3, 14) , 160, 0)
-
-        game.addVisual(energiaBombero)
-        game.addVisual(cantidadDeAguaBombero)
-        game.addVisual(civil1)
-        game.addVisual(civil2)
-        game.addVisual(civil3)
-        game.addVisual(civil4)
-        game.addVisual(civil5)
-        game.addVisual(flama1)
-        game.addVisual(flama2)
-        game.addVisual(flama3)
-        game.addVisual(flama4)
-        game.addVisual(flama5)
-        game.addVisual(flama6)
-        game.addVisual(flama7)
-        game.addVisual(flama8)
-        game.addVisual(flama9)
-        game.addVisual(lago)
-        game.addVisual(bombero)
-        game.addVisual(salida)
-
-        keyboard.w().onPressDo({bombero.subir()})
-        keyboard.s().onPressDo({bombero.bajar()})
-        keyboard.d().onPressDo({bombero.derecha()})
-        keyboard.a().onPressDo({bombero.izquierda()})
-
-        keyboard.up().onPressDo({bombero.subir()})
-        keyboard.down().onPressDo({bombero.bajar()})
-        keyboard.right().onPressDo({bombero.derecha()})
-        keyboard.left().onPressDo({bombero.izquierda()})
-
-        keyboard.backspace().onPressDo({menu.volverAlMenu()})
-
-        keyboard.p().onPressDo({ 
-                console.println("game.addVisual(new Muro(position = game.at(" + bombero.position().x() + ", " + bombero.position().y() + ")))")
-            })
-        
-        game.onCollideDo(bombero, {
-            objeto => objeto.interactuarCon(bombero)
-            })
-        }
-}
-
-
 class Menu {
     const property image
     var property position
-
 }
 
 const titulo = new Menu(image = "TituloMenuEscalado.png", position = game.at(4, 10))
 const textoFacil = new Menu(image = "BotonFaciEscalado.png", position = game.at(4, 5))
 const textoDificil = new Menu(image = "BotonDifiEscalado.png", position = game.at(4, 3))
 const textoControles = new Menu(image = "controlesMenu.png", position = game.at(4, 1))
-const cursorMenu = new Menu (image = "cursorEscalado.png",position = game.at(3, 7 ))
-
-
-
-
-
+const cursorMenu = new Menu(image = "cursorEscalado.png", position = game.at(3, 7))
 
 object pestañaLogros {
     var estaEnLogros = false
@@ -377,7 +325,6 @@ object pestañaLogros {
     const logro5 = new LogroIncendios(position = game.at(2, 7), metaApagar = 5)
     const logro6 = new LogroIncendios(position = game.at(8, 7), metaApagar = 15)
     
-
     method iniciar() {
         self.cambiarEstaEnLogros(true)
         game.addVisual(fondoLogros)
@@ -389,8 +336,7 @@ object pestañaLogros {
         game.addVisual(logro5)
         game.addVisual(logro6)
 
-        keyboard.backspace().onPressDo({menu.volverAlMenu()})
-        keyboard.backspace().onPressDo({self.cambiarEstaEnLogros(false)})
+        keyboard.backspace().onPressDo({ menu.volverAlMenu() })
+        keyboard.backspace().onPressDo({ self.cambiarEstaEnLogros(false) })
     }
-    
 }
