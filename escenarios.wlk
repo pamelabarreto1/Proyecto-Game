@@ -66,7 +66,7 @@ class Nivel {
 
 
     method iniciar() {
-        gestorDeNivel.nivelActual(self.numeroDeNivel())
+        gestorDeNivel.nivelActual(self)
         console.println(self.cantidadDeObjetivos())
         administradorDeNivel.objetosPendientes(self.cantidadDeObjetivos())
 
