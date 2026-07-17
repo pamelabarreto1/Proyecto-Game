@@ -46,7 +46,7 @@ object bombero {
     }
 
     method moverseHacia(nuevaPosicion) {
-        if (self.puedeIrA(nuevaPosicion)) {
+        if (self.puedeIrA(nuevaPosicion) and not (self.estaEnMinijuego())) {
             position = nuevaPosicion
             self.cansarse()
         }
@@ -95,6 +95,11 @@ object bombero {
     method cargarAgua() {
         agua = 5 
         game.say(self, "¡Manguera cargada!")
+    }
+    var estaEnMinijuego = false
+    method estaEnMinijuego() = estaEnMinijuego
+    method ahoraEstaEnMinjuego(unBool) {
+        estaEnMinijuego = unBool
     }
 }
 

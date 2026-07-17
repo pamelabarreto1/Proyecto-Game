@@ -55,6 +55,8 @@ object minijuegoTiming {
         juegoTerminado = false 
         cursor.resetear()
 
+        bombero.ahoraEstaEnMinjuego(true)
+
         game.addVisual(barra)
         game.addVisual(cursor)
 
@@ -79,5 +81,7 @@ object minijuegoTiming {
         game.removeVisual(barra)
         game.removeVisual(cursor)
         keyboard.space().onPressDo({}) 
+        bombero.ahoraEstaEnMinjuego(false)
+        
     }
 }
