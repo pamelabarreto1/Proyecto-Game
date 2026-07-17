@@ -128,7 +128,7 @@ class NivelDificil inherits Nivel {
 const nivelFacil = new NivelFacil(
     numeroDeNivel = 1,
     fondoNivel = fondoNivel_1,
-    posicionBombero = game.at(1, 13),
+    posicionBombero = game.at(3, 13),
     energiaBomberoInicial = 250,
     aguaBomberoInicial = 0,
     lago = new Lago(position = game.at(5, 5)),
@@ -177,7 +177,7 @@ const nivelDificil = new NivelDificil(
     energiaBomberoInicial = 160,
     aguaBomberoInicial = 0,
     lago = new Lago(position = game.at(5, 5)),
-    salida = new Salida(position = game.at(4, 14)),
+    salida = new Salida(position = game.at(3, 14)),
     civiles = [
         new Civil(position = game.at(1, 12), image = "civilAbrazandoRodilla.png"),
         new Civil(position = game.at(1, 4), image = "civilPidiendoAyuda.png"),
@@ -186,7 +186,7 @@ const nivelDificil = new NivelDificil(
         new Civil(position = game.at(14, 7), image = "civilArrodillado.png")
     ],
     fuegos = [
-        new Fuego(position = game.at(1, 13), daño = 40),
+        new Fuego(position = game.at(2, 12), daño = 40),
         new Fuego(position = game.at(2, 4), daño = 40),
         new Fuego(position = game.at(2, 11), daño = 40),
         new Fuego(position = game.at(8, 2), daño = 40),

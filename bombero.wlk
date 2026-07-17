@@ -104,7 +104,7 @@ object bombero {
 }
 
 object energiaBombero {
-    var property position = game.at(2, 14)
+    var property position = game.at(1, 14)
     
     method text() = "Energía Restante: " + bombero.energia().toString()
     method textColor() = "FFFFFFFF"
@@ -113,7 +113,7 @@ object energiaBombero {
 }
 
 object cantidadDeAguaBombero {
-    var property position = game.at(2, 13)
+    var property position = game.at(1, 13)
     
     method text() = "Agua Restante: " + bombero.agua().toString()
     method textColor() = "FFFFFFFF"
